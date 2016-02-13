@@ -41,7 +41,7 @@
 ;; function which is computable but not primitive recursive, providing a
 ;; counterexample to the belief in the early 1900s that every computable
 ;; function was also primitive recursive (Dtzel 1991). It grows faster
-;; than an exponential function, or even a multiple exponential function. 
+;; than an exponential function, or even a multiple exponential function.
 (defun ackermann (m n)
   (declare (type integer m n))
   (cond
@@ -56,7 +56,7 @@
 ;; calculate the "level" of a point in the Mandebrot Set, which is the
 ;; number of iterations taken to escape to "infinity" (points that
 ;; don't escape are included in the Mandelbrot Set). This version is
-;; intended to test performance when programming in naïve math-style. 
+;; intended to test performance when programming in naive math-style.
 (defun mset-level/complex (c)
   (declare (type complex c))
   (loop :for z = #c(0 0) :then (+ (* z z) c)
