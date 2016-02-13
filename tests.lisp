@@ -17,14 +17,14 @@
     :group :misc
     :function 'cl-bench.misc:run-fasload
     :runs 20
-    :disabled-for '(gcl armedbear ecl))
+    :disabled-for '(gcl armedbear))
 
 (defbench sum-permutations
     :group :misc
     :long "traversal of a large, linked, self-sharing structure"
     :function 'cl-bench.misc:run-permutations
     :runs 2
-    :disabled-for '(lispworks-personal-edition ecl))
+    :disabled-for '(lispworks-personal-edition))
 
 (defbench walk-list/seq
     :group :misc

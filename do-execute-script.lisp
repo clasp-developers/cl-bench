@@ -34,14 +34,14 @@
   (bench-gc)
   (bench-report 'cl-bench.misc:run-compiler "COMPILER" 3))
 
-#-(or gcl armedbear ecl)
+#-(or gcl armedbear)
 (progn
   (format t "=== running #<benchmark LOAD-FASL for 20 runs>~%")
   (force-output)
   (bench-gc)
   (bench-report 'cl-bench.misc:run-fasload "LOAD-FASL" 20))
 
-#-(or lispworks-personal-edition ecl)
+#-(or lispworks-personal-edition)
 (progn
   (format t "=== running #<benchmark SUM-PERMUTATIONS for 2 runs>~%")
   (force-output)
@@ -56,7 +56,7 @@
   (funcall 'cl-bench.misc::setup-walk-list/seq)
   (bench-report 'cl-bench.misc:walk-list/seq "WALK-LIST/SEQ" 2))
 
-#-(or lispworks-personal-edition armedbear poplog)
+#-(or lispworks-personal-edition armedbear poplog ecl-bytecmp)
 (progn
   (format t "=== running #<benchmark WALK-LIST/MESS for 1 runs>~%")
   (force-output)
