@@ -7,13 +7,18 @@
 (load "defpackage")
 (in-package :cl-bench)
 
+(ext:set-limit 'ext:c-stack (* 8 1024 1024))
 
 (defun bench-gc ()
   (si:gc t))
 
+#+threads
+(defmacro with-spawned-thread (&body body)
+  `(mp:process-run-function nil #'(lambda () ,@body)))
+
+#-threads
 (defmacro with-spawned-thread (&body body)
   `(progn ,@body))
-
 
 ;; to autoload the compiler
 (compile 'bench-gc)
