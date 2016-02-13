@@ -21,7 +21,7 @@
 
 
 
-(eval-when (:compile-toplevel :load-toplevel)
+(eval-when (:compile-toplevel :load-toplevel :execute)
   (defconstant +digit+ "0123456789ABCDEF")
 
   (defconstant +digits-needed+
