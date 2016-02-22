@@ -22,6 +22,8 @@
 
 ;; to autoload the compiler
 (compile 'bench-gc)
+
+#-ecl-bytecmp
 (setq c::*cc-flags* (concatenate 'string "-I. " c::*cc-flags*))
 
 ;; EOF
