@@ -1,24 +1,6 @@
-# To modify optimization settings, you can change the $(OPTIMIZE)
-# variable below. This is prepended to the lisp source files before
-# they are compiled.
-#
 # Requires GNU Make or equivalent.
 
 SHELL = /bin/sh
-OPTIMIZE = "(declaim (optimize (speed 3) (space 1) (safety 0) (debug 0) (compilation-speed 0)))"
-
-
-FILES := $(patsubst %.lisp,%.olisp, $(wildcard files/*.lisp))
-vpath %.lisp   files
-
-%.olisp: %.lisp
-	echo $(OPTIMIZE) > $@
-	cat $< >> $@
-
-
-optimize-files: $(FILES)
-
-
 
 clean-results:
 	-rm -f /var/tmp/CL-bench*
@@ -28,6 +10,6 @@ clean:
 
 distclean: clean clean-results
 
-.PHONY: clean clean-results distclean optimize-files
+.PHONY: clean clean-results distclean
 
 # EOF
