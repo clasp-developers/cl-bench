@@ -1,6 +1,6 @@
 ;;; generate.lisp
 ;;;
-;;; Time-stamp: <2004-01-01 emarsden>
+;;; Time-stamp: <2016-05-13 19:50:25 jack>
 ;;
 ;;
 ;; Load into a CL implementation that has a working pathname
@@ -42,20 +42,6 @@
                               :type "olisp")))
         (format compile "(COMPILE-FILE ~S)~%" p)
       (format run "(LOAD (COMPILE-FILE-PATHNAME ~S))~%" p)))
-
-    ;; for CL-PPCRE
-    #+nil
-    (dolist (name '("packages" "specials" "util" "lexer"
-                    "parser" "regex-class" "convert" "optimize"
-                    "closures" "repetition-closures" "scanner" "api"
-                    "ppcre-tests"))
-      (format compile "(COMPILE-FILE ~S)~%"
-              (make-pathname :directory '(:relative "files" "cl-ppcre")
-                             :name name
-                             :type "lisp"))
-      (format run "(LOAD (COMPILE-FILE-PATHNAME ~S))~%"
-              (make-pathname :directory '(:relative "files" "cl-ppcre")
-                             :name name)))
 
     (format run "(COMPILE-FILE ~S)~%" #p"support.lisp")
     (format run "(LOAD (COMPILE-FILE-PATHNAME ~S))~%" #p"support.lisp")

@@ -1,6 +1,6 @@
 ;;; all the performance benchmarks
 ;;;
-;;; Time-stamp: <2016-05-13 19:43:21 jack>
+;;; Time-stamp: <2016-05-13 19:48:31 jack>
 
 
 (in-package :cl-bench)
@@ -407,23 +407,5 @@
     :long "Fibonnaci function implemented with EQL specialization"
     :function 'cl-bench.clos:run-eql-fib
     :runs 2)
-
-;; this is really a test of the speed of loading a source file full of data
-#+nil
-(defbench ppcre-load/source
-    :long "CL-PPCRE, Perl-compatible regular expressions: loading data file"
-    :function '(load (make-pathname :directory '(:relative "files" "cl-ppcre")
-                  :name "testdata"
-                  :type "lisp"))
-    :runs 1
-    :disabled-for '(armedbear))
-
-#+nil
-(defbench ppcre-match
-    :long "CL-PPCRE, perl-compatible regular expressions: matching speed"
-    :function '(cl-ppcre-test:test)
-    :runs 20
-    :disabled-for '(armedbear))
-
 
 ;; EOF
