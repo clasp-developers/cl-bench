@@ -1,7 +1,7 @@
 ;;; support.lisp --- performance benchmarks for Common Lisp implementations
 ;;
 ;; Author: Eric Marsden  <emarsden@laas.fr>
-;; Time-stamp: <2004-08-01 emarsden>
+;; Time-stamp: <2016-05-13 11:10:21 jack>
 ;;
 ;;
 ;; The benchmarks consist of
@@ -13,7 +13,6 @@
 ;;   - CLOS tests
 ;;   - array, string and bitvector exercises
 ;;
-
 
 (in-package :cl-bench)
 
@@ -36,7 +35,7 @@
              :type string)
      (long   :accessor benchmark-long
              :initarg :long
-             :initform nil
+             :initform ""
              :type string)
      (group  :accessor benchmark-group
              :initarg :group)
@@ -108,13 +107,11 @@
        (bench-report-header)
        (dolist (b (reverse *benchmarks*))
          (bench-gc)
-         (with-spawned-thread
-             (with-slots (setup function short runs) b
-               (when setup (funcall setup))
-               (format t "~&=== running ~a~%" b)
-               (bench-report function short runs))))
+         (with-slots (setup function short runs) b
+           (when setup (funcall setup))
+           (format t "~&=== running ~a~%" b)
+           (bench-report function short runs)))
        (bench-report-footer))))
-
 
 (defun benchmark-report-file ()
   (multiple-value-bind (second minute hour date month year)
