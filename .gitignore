@@ -2,3 +2,4 @@
 *.fasc
 *.fasl
 *.olisp
+*.lafsl
