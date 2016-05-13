@@ -1,7 +1,7 @@
 ;; clos.lisp -- CLOS benchmarking code
 ;;
 ;; Author: Eric Marsden <emarsden@laas.fr>
-;; Time-stamp: <2003-12-30 emarsden>
+;; Time-stamp: <2016-05-10 13:10:15 jack>
 ;;
 ;;
 ;; This file does some benchmarking of CLOS functionality. It creates
@@ -47,6 +47,16 @@
 ;; Note: warnings about undefined accessors and types are normal when
 ;; compiling this code.
 
+(defpackage :cl-bench.clos
+  (:use :common-lisp)
+  (:export #:run-defclass
+           #:run-defmethod
+           #:make-instances
+           #:make-instances/simple
+           #:methodcalls/simple
+           #:methodcalls/simple+after
+           #:methodcalls/complex
+           #:run-eql-fib))
 
 (in-package :cl-bench.clos)
 

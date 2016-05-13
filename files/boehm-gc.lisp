@@ -1,6 +1,7 @@
 ;;; boehm-gc.lisp -- benchmark testing GC performance
 ;;
-;; Time-stamp: <2002-11-22 emarsden>
+;; Time-stamp: <2016-05-10 13:07:17 jack>
+;; 
 ;;
 ;; see <URL:http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_bench.html>
 ;; for original code in C, C++, Java and Scheme. This is adapted from
@@ -38,6 +39,9 @@
 ;;       better time performance.  This benchmark should be run in a 32MB
 ;;       heap, though we don't currently know how to enforce that uniformly.
 
+(defpackage :cl-bench.boehm-gc
+  (:use :common-lisp)
+  (:export #:gc-benchmark))
 
 (in-package :cl-bench.boehm-gc)
 

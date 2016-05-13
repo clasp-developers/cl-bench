@@ -1,10 +1,13 @@
 ;;;; -*- Mode: Lisp; Syntax: Common-Lisp; Package: png; -*-
-;;;; ------------------------------------------------------------------------------------------
+;;;; -------------------------------------------------------------------
 ;;;;     Title: The DEFLATE Compression (rfc1951)
 ;;;;   Created: Thu Apr 24 22:12:58 1997
 ;;;;    Author: Gilbert Baumann <unk6@rz.uni-karlsruhe.de>
-;;;; ------------------------------------------------------------------------------------------
+;;;; -------------------------------------------------------------------
 ;;;;  (c) copyright 1997,1998 by Gilbert Baumann
+(defpackage :cl-bench.deflate
+  (:use :common-lisp)
+  (:export #:run-deflate-file))
 
 (in-package :cl-bench.deflate)
 
@@ -289,7 +292,7 @@
 
 
 (defun run-deflate-file ()
-  (test-deflate-file "files/message.gz"))
+  (test-deflate-file "bench:test;message.gz"))
 
 
 ;; EOF

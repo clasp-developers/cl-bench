@@ -1,8 +1,13 @@
 ;; hashtable and READ-LINE benchmarking code
 ;;
 ;; some code by Paul Foley
-;; Time-stamp: <2003-12-23 emarsden>
+;; Time-stamp: <2016-05-10 13:11:57 jack>
 
+(defpackage :cl-bench.hash
+  (:use :common-lisp)
+  (:export #:run-slurp-lines
+           #:hash-strings
+           #:hash-integers))
 
 (in-package :cl-bench.hash)
 

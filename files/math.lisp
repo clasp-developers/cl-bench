@@ -1,9 +1,18 @@
 ;;; math.lisp -- various numerical operations
 ;;
-;; Time-stamp: <2004-01-05 emarsden>
+;; Time-stamp: <2016-05-10 13:13:24 jack>
 ;;
 ;; some basic mathematical benchmarks
 
+(defpackage :cl-bench.math
+  (:use :common-lisp)
+  (:export #:run-factorial
+           #:run-fib
+           #:run-fib-ratio
+           #:run-ackermann
+           #:run-mandelbrot/complex
+           #:run-mandelbrot/dfloat
+           #:run-mrg32k3a))
 
 (in-package :cl-bench.math)
 

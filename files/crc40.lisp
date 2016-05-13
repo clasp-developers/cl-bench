@@ -2,6 +2,9 @@
 ;;
 ;; from Raymond Toy
 
+(defpackage :cl-bench.crc
+  (:use :common-lisp)
+  (:export #:run-crc40))
 
 (in-package :cl-bench.crc)
 

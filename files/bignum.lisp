@@ -1,6 +1,6 @@
 ;;; bignum.lisp -- bignum operations from Bruno Haible
 ;;
-;; Time-stamp: <2004-01-09 emarsden>
+;; Time-stamp: <2016-05-10 13:12:42 jack>
 ;;
 
 ;; code from Bruno Haible <haible@ilog.fr>
@@ -19,6 +19,17 @@
 ;; B. (from Pari)
 ;;       u=1;v=1;p=1;q=1;for(k=1..1000){w=u+v;u=v;v=w;p=p*w;q=lcm(q,w);}
 
+(defpackage :cl-bench.bignum
+  (:use :common-lisp)
+  (:export #:run-elem-100-1000
+           #:run-elem-1000-100
+           #:run-elem-10000-1
+           #:run-pari-100-10
+           #:run-pari-200-5
+           #:run-pari-1000-1
+           #:run-pi-decimal/small
+           #:run-pi-decimal/big
+           #:run-pi-atan))
 
 (in-package :cl-bench.bignum)
 

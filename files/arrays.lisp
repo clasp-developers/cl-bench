@@ -1,7 +1,7 @@
 ;; benchmarks speed of array and sequence operations
 ;;
 ;; Author: Eric Marsden <emarsden@laas.fr>
-;; Time-stamp: <2003-12-29 emarsden>
+;; Time-stamp: <2016-05-10 13:07:34 jack>
 ;;
 ;;
 ;; Timing tests for creation, initialization, access and garbage
@@ -10,6 +10,16 @@
 ;; NOTE: be careful running these in CMUCL on Linux with sizes larger
 ;; than your RAM; you will most likely crash your machine.
 
+(defpackage :cl-bench.arrays
+  (:use :common-lisp)
+  (:export #:bench-1d-arrays
+           #:bench-2d-arrays
+           #:bench-3d-arrays
+           #:bench-bitvectors
+           #:bench-strings
+           #:bench-strings/adjustable
+           #:bench-string-concat
+           #:bench-search-sequence))
 
 (in-package :cl-bench.arrays)
 

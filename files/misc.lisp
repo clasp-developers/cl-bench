@@ -1,25 +1,26 @@
 ;;; misc.lisp
 ;;;
-;;; Time-stamp: <2004-06-28 emarsden>
+;;; Time-stamp: <2016-05-13 11:47:06 jack>
 
+(defpackage :cl-bench.misc
+  (:use :common-lisp)
+  (:export #:run-compiler
+           #:run-fasload
+           #:run-permutations
+           #:walk-list/seq
+           #:walk-list/mess))
 
 (in-package :cl-bench.misc)
 
-
-
 (defun run-compiler ()
-  (compile-file (make-pathname :directory '(:relative "files")
-                               :name "gabriel"
-                               :type "olisp")
+  (compile-file #P"bench:test;gabriel.lisp"
                 :print nil
                 #-gcl :verbose #-gcl nil))
 
 (defun run-fasload ()
   (load
    (compile-file-pathname
-    (make-pathname :directory '(:relative "files")
-                   :name "gabriel"
-                   :type "olisp"))))
+    #P"bench:test;gabriel.lisp")))
 
 
 ;; by Gene Luks (adapted from the Larceny benchmarks)

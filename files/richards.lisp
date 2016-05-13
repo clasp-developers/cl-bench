@@ -1,6 +1,6 @@
 ;;; richards.lisp -- operating system simulation code
 ;;
-;; Time-stamp: <2003-12-30 emarsden>
+;; Time-stamp: <2016-05-10 13:09:23 jack>
 
 
 ;; ======================================================================
@@ -31,6 +31,9 @@
 ;; Application, but I think it tests the efficiency of the basic language
 ;; mechanisms fairly well.
 
+(defpackage :cl-bench.richards
+  (:use :common-lisp)
+  (:export #:richards))
 
 (in-package :cl-bench.richards)
 

@@ -1,6 +1,6 @@
 ;;; ratios.lisp -- calculate digits of pi using ratios
 ;;
-;; Time-stamp: <2003-12-29 emarsden>
+;; Time-stamp: <2016-05-10 13:12:20 jack>
 ;;
 ;;
 ;; This code was posted to comp.lang.lisp on 2001-12-28 by Vladimir
@@ -37,6 +37,9 @@
 ;;   find 1040 digits of the number pi
 ;; 	(find-pi 120 150000 1039) ; 6.5 min, CLISP // ?? ACL
 
+(defpackage :cl-bench.ratios
+  (:use :common-lisp)
+  (:export #:run-pi-ratios))
 
 (in-package :cl-bench.ratios)
 

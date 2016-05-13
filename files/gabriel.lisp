@@ -28,7 +28,30 @@
 ;; - some renamings to be closer to standard CL style (eg global
 ;;   variable names with asterisk). Only partially done...
 
-
+(defpackage :cl-bench.gabriel
+  (:use :common-lisp)
+  (:export #:boyer
+           #:browse
+           #:dderiv-run
+           #:deriv-run
+           #:run-destructive
+           #:run-div2-test1
+           #:run-div2-test2
+           #:div2-l
+           #:run-fft
+           #:run-frpoly/fixnum
+           #:run-frpoly/bignum
+           #:run-frpoly/float
+           #:run-puzzle
+           #:run-tak
+           #:run-ctak
+           #:run-trtak
+           #:run-takl
+           #:run-stak
+           #:fprint/pretty
+           #:fprint/ugly
+           #:run-traverse
+           #:run-triangle))
 
 (in-package :cl-bench.gabriel)
 
