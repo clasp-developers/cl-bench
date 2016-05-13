@@ -1,7 +1,9 @@
 ;;; support.lisp --- performance benchmarks for Common Lisp implementations
 ;;
 ;; Author: Eric Marsden  <emarsden@laas.fr>
-;; Time-stamp: <2016-05-13 12:26:30 jack>
+;; Maintainer: Daniel Kochmański <daniel@turtleware.eu>
+;;
+;; Time-stamp: <2016-05-13 19:42:30 jack>
 ;;
 ;;
 ;; The benchmarks consist of
@@ -16,7 +18,7 @@
 
 (in-package :cl-bench)
 
-(defvar *version* "20040801")
+(defvar *version* "20160513")
 
 (defvar *benchmarks* '())
 (defvar *benchmark-results* '())
