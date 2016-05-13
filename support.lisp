@@ -1,7 +1,7 @@
 ;;; support.lisp --- performance benchmarks for Common Lisp implementations
 ;;
 ;; Author: Eric Marsden  <emarsden@laas.fr>
-;; Time-stamp: <2016-05-13 11:10:21 jack>
+;; Time-stamp: <2016-05-13 12:26:30 jack>
 ;;
 ;;
 ;; The benchmarks consist of
@@ -118,7 +118,7 @@
       (get-decoded-time)
     (declare (ignore second))
     (format nil "~aCL-benchmark-~d~2,'0d~2,'0dT~2,'0d~2,'0d"
-            #+win32 "" #-win32 "/var/tmp/"
+            "bench:result;"
             year month date hour minute)))
 
 ;; grr, CLISP doesn't implement ~<..~:>

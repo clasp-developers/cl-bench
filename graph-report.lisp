@@ -1,12 +1,12 @@
 ;;; graph-report.lisp
 ;;
 ;; Author: Johannes Grødem <johs@copyleft.no>
-;; Time-stamp: <2004-02-29 emarsden>
+;; Time-stamp: <2016-05-13 12:25:11 jack>
 ;;
 ;;
 ;; When loaded into CMUCL, this should generate a report comparing the
 ;; performance of the different CL implementations which have been
-;; tested. Reads the /var/tmp/CL-benchmark* files to obtain data from
+;; tested. Reads the output/CL-benchmark* files to obtain data from
 ;; previous runs.
 
 (defparameter *screen-width* 80)

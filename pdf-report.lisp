@@ -1,12 +1,12 @@
 ;;; pdf-report.lisp
 ;;
 ;; Author: Eric Marsden <emarsden@laas.fr>
-;; Time-stamp: <2004-03-09 emarsden>
+;; Time-stamp: <2016-05-13 12:24:31 jack>
 ;;
 ;;
 ;; When loaded into CMUCL, this should generate a report comparing the
 ;; performance of the different CL implementations which have been
-;; tested. Reads the /var/tmp/CL-benchmark* files to obtain data from
+;; tested. Reads the output/CL-benchmark* files to obtain data from
 ;; previous runs. Requires the cl-pdf library. 
 
 (in-package :cl-user)
@@ -45,9 +45,9 @@
 
 
 ;; FIXME annotate each benchmark with estimated allocation volume & peak storage requirement
-(defun bench-analysis (&optional (filename #p"/tmp/cl-bench.pdf"))
+(defun bench-analysis (&optional (filename #p"bench:result;cl-bench.pdf"))
   (let (content data groups implementations benchmarks impl-scores impl-labels)
-    (dolist (f (directory "/var/tmp/CL-benchmark*.*"))
+    (dolist (f (directory "bench:result;CL-benchmark*.*"))
       (ignore-errors
         (with-open-file (f f :direction :input)
           (let ((*read-eval* nil))
@@ -118,9 +118,9 @@
 
 
 
-;; (defun bench-analysis (&optional (filename #p"/tmp/cl-bench.pdf"))
+;; (defun bench-analysis (&optional (filename #p"bench:result;cl-bench.pdf"))
 ;;   (let (data groups implementations benchmarks impl-scores impl-labels)
-;;     (dolist (f (directory "/var/tmp/CL-benchmark*.*"))
+;;     (dolist (f (directory "bench:result;CL-benchmark*.*"))
 ;;       (ignore-errors
 ;;         (with-open-file (f f :direction :input)
 ;;           (let ((*read-eval* nil))

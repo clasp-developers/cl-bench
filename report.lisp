@@ -1,12 +1,12 @@
 ;;; report.lisp
 ;;
 ;; Author: Eric Marsden  <emarsden@laas.fr>
-;; Time-stamp: <2004-02-29 emarsden>
+;; Time-stamp: <2016-05-13 12:25:00 jack>
 ;;
 ;;
 ;; When loaded into CMUCL, this should generate a report comparing the
 ;; performance of the different CL implementations which have been
-;; tested. Reads the /var/tmp/CL-benchmark* files to obtain data from
+;; tested. Reads the output/CL-benchmark* files to obtain data from
 ;; previous runs.
 ;;
 ;; FIXME could create graphical version using ploticus
@@ -21,7 +21,7 @@
 
 (defun bench-analysis ()
   (let (data implementations benchmarks)
-    (dolist (f (directory "/var/tmp/CL-benchmark*.*"))
+    (dolist (f (directory "bench:result;CL-benchmark*.*"))
       (ignore-errors
         (with-open-file (f f :direction :input)
           (let ((*read-eval* nil))

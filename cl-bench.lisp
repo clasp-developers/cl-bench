@@ -2,7 +2,6 @@
 
 (in-package #:cl-bench)
 
-#+ (or)
 (defun bench-gc ()
   (trivial-garbage:gc :full t))
 
@@ -10,11 +9,11 @@
 (defun bench-time ()
   (error "use metering"))
 
-(setf (logical-pathname-translations "bench")
-      `(("root;*.*" ,(asdf:system-source-directory '#:cl-bench))
-        ("test;*.*" ,(merge-pathnames
-                      "files/"
-                      (asdf:system-source-directory '#:cl-bench)))))
+(let ((root-dir (asdf:system-source-directory '#:cl-bench)))
+  (setf (logical-pathname-translations "bench")
+        `(("root;*.*"   ,root-dir)
+          ("test;*.*"   ,(merge-pathnames "files/"  root-dir))
+          ("result;*.*" ,(merge-pathnames "output/" root-dir)))))
 
 
 ;;; This is disabled after the consultation with the ABCL maintainer

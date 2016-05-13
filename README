@@ -96,9 +96,9 @@ following steps:
    5. Load the file "do-execute-script.lisp", which should cause all
       the tests to be executed. 
 
-For each tested implementation, you should have a file in /var/tmp (or
-in the current directory on Windows) named "CL-benchmark-<date>".
-These files will have the following format:
+For each tested implementation, you should have a file in output/
+named "CL-benchmark-<date>".  These files will have the following
+format:
 
 ,---- /var/tmp/CL-benchmark-20010821T2208 ---
 | ;; -*- lisp -*-  CMU Common Lisp CVS sources, level-1 built 2001-08-22 on maftia1
@@ -179,10 +179,10 @@ each test, you should see the elapsed user time, and possibly (if this
 has been coded for your implementation) elapsed system time and the
 number of bytes consed during the test execution. 
 
-The data in the different /var/tmp/CL-benchmark-* files is analysed by the
-file "report.lisp", to generate a report comparing the performance of
-the different implementations. This file needs to be run in a Common
-Lisp implementation; the one you use will be considered the
+The data in the different output/CL-benchmark-* files is analysed by
+the file "report.lisp", to generate a report comparing the performance
+of the different implementations. This file needs to be run in a
+Common Lisp implementation; the one you use will be considered the
 "reference" implementation. In the report which is generated, for each
 test the timing for the reference implementation will be shown, as
 well as the _relative times_ for each of the other tested
