@@ -15,7 +15,8 @@
           ("test;*.*.*"   ,(merge-pathnames "files/"  root-dir))
           ("misc;*.*.*"   ,(merge-pathnames "misc/" root-dir))
           ("result;*.*.*" ,(merge-pathnames "output/" root-dir))
-          ("**;*.*.*"     ,(merge-pathnames "**/" root-dir)))))
+          ("**;*.*.*"     ,(merge-pathnames "**/" root-dir))))
+  (ensure-directories-exist (merge-pathnames "output/" root-dir)))
 
 
 ;;; This is disabled after the consultation with the ABCL maintainer
