@@ -11,20 +11,20 @@
     :function 'cl-bench.misc:run-compiler
     :long "Compilation of the Gabriel benchmarks"
     :runs 3
-    :disabled-for '(gcl armedbear))
+    :disabled-for '(:gcl :armedbear))
 
 (defbench load-fasl
     :group :misc
     :function 'cl-bench.misc:run-fasload
     :runs 20
-    :disabled-for '(gcl armedbear))
+    :disabled-for '(:gcl :armedbear))
 
 (defbench sum-permutations
     :group :misc
     :long "traversal of a large, linked, self-sharing structure"
     :function 'cl-bench.misc:run-permutations
     :runs 2
-    :disabled-for '(lispworks-personal-edition))
+    :disabled-for '(:lispworks-personal-edition))
 
 (defbench walk-list/seq
     :group :misc
@@ -32,7 +32,7 @@
     :setup 'cl-bench.misc::setup-walk-list/seq
     :function 'cl-bench.misc:walk-list/seq
     :runs 2
-    :disabled-for '(lispworks-personal-edition armedbear))
+    :disabled-for '(:lispworks-personal-edition :armedbear))
 
 (defbench walk-list/mess
     :group :misc
@@ -40,7 +40,7 @@
     :setup 'cl-bench.misc::setup-walk-list/mess
     :function 'cl-bench.misc:walk-list/mess
     :runs 1
-    :disabled-for '(lispworks-personal-edition armedbear poplog))
+    :disabled-for '(:lispworks-personal-edition :armedbear :poplog))
 
 (defbench boyer
   :group :gabriel
@@ -283,7 +283,7 @@
     :group :gc
     :function 'cl-bench.boehm-gc:gc-benchmark
     :runs 1
-    :disabled-for '(lispworks-personal-edition))
+    :disabled-for '(:lispworks-personal-edition))
 
 (defbench deflate-file
     :group :misc
@@ -296,21 +296,21 @@
     :long "Adding together two vectors"
     :function 'cl-bench.arrays:bench-1d-arrays
     :runs 1
-    :disabled-for '(lispworks-personal-edition))
+    :disabled-for '(:lispworks-personal-edition))
 
 (defbench 2d-arrays
     :group :sequence
     :long "Adding together two 2-dimensional arrays"
     :function 'cl-bench.arrays:bench-2d-arrays
     :runs 1
-    :disabled-for '(lispworks-personal-edition))
+    :disabled-for '(:lispworks-personal-edition))
 
 (defbench 3d-arrays
     :group :sequence
     :long "Adding together two 3-dimensional arrays"
     :function 'cl-bench.arrays:bench-3d-arrays
     :runs 1
-    :disabled-for '(lispworks-personal-edition))
+    :disabled-for '(:lispworks-personal-edition))
 
 ;; Poplog seems to have a buggy implementation of bitvectors
 (defbench bitvectors
@@ -318,14 +318,14 @@
     :long "BIT-XOR, BIT-AND on big bitvectors"
     :function 'cl-bench.arrays:bench-bitvectors
     :runs 3
-    :disabled-form '(lispworks-personal-edition poplog))
+    :disabled-form '(:lispworks-personal-edition poplog))
 
 (defbench bench-strings
     :group :sequence
     :long "Allocate and fill large strings"
     :function 'cl-bench.arrays:bench-strings
     :runs 1
-    :disabled-for '(lispworks-personal-edition))
+    :disabled-for '(:lispworks-personal-edition))
 
 (defbench fill-strings/adjust
     :group :sequence
@@ -333,7 +333,7 @@
     :long "Fill an adjustable array with characters"
     :function 'cl-bench.arrays:bench-strings/adjustable
     :runs 1
-    :disabled-for '(lispworks-personal-edition))
+    :disabled-for '(:lispworks-personal-edition))
 
 ;; as of 2002-01-20 this crashes CLISP, both release and CVS versions.
 ;; It exceeds maximum array size for both Allegro CL and LispWorks.
@@ -343,14 +343,14 @@
     :long "WITH-OUTPUT-TO-STRING and much output"
     :function 'cl-bench.arrays:bench-string-concat
     :runs 1
-    :disabled-for '(allegro lispworks-personal-edition poplog))
+    :disabled-for '(:allegro :lispworks-personal-edition :poplog))
 
 (defbench search-sequence
     :group :sequence
     :long "FIND, FIND-IF, POSITION on a simple-vector"
     :function 'cl-bench.arrays:bench-search-sequence
     :runs 1
-    :disabled-for '(lispworks-personal-edition))
+    :disabled-for '(:lispworks-personal-edition))
 
 (defbench clos-defclass
     :group :clos
@@ -400,7 +400,7 @@
     :long "Run methodcalls with and method combination."
     :function 'cl-bench.clos:methodcalls/complex
     :runs 5
-    :disabled-for '(clisp poplog))
+    :disabled-for '(:clisp :poplog))
 
 (defbench eql-specialized-fib
     :group :clos

@@ -108,11 +108,14 @@
            (*compile-print* nil))
        (bench-report-header)
        (dolist (b (reverse *benchmarks*))
-         (bench-gc)
-         (with-slots (setup function short runs) b
-           (when setup (funcall setup))
-           (format t "~&=== running ~a~%" b)
-           (bench-report function short runs)))
+         (if (benchmark-disabled-for b)
+             (format t "~&=== skip ~a (disabled)~%" b)
+             (progn
+               (bench-gc)
+               (with-slots (disabled-for setup function short runs) b
+                 (when setup (funcall setup))
+                 (format t "~&=== running ~a~%" b)
+                 (bench-report function short runs)))))
        (bench-report-footer))))
 
 (defun benchmark-report-file ()
