@@ -11,9 +11,11 @@
 
 (let ((root-dir (asdf:system-source-directory '#:cl-bench)))
   (setf (logical-pathname-translations "bench")
-        `(("root;*.*"   ,root-dir)
-          ("test;*.*"   ,(merge-pathnames "files/"  root-dir))
-          ("result;*.*" ,(merge-pathnames "output/" root-dir)))))
+        `(("root;*.*.*"   ,root-dir)
+          ("test;*.*.*"   ,(merge-pathnames "files/"  root-dir))
+          ("misc;*.*.*"   ,(merge-pathnames "misc/" root-dir))
+          ("result;*.*.*" ,(merge-pathnames "output/" root-dir))
+          ("**;*.*.*"     ,(merge-pathnames "**/" root-dir)))))
 
 
 ;;; This is disabled after the consultation with the ABCL maintainer

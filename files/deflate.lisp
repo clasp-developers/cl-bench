@@ -292,7 +292,7 @@
 
 
 (defun run-deflate-file ()
-  (test-deflate-file "bench:test;message.gz"))
+  (test-deflate-file "bench:misc;message.gz"))
 
 
 ;; EOF
