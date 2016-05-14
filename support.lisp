@@ -109,7 +109,7 @@
        (bench-report-header)
        (dolist (b (reverse *benchmarks*))
          (if (benchmark-disabled-for b)
-             (format t "~&=== skip ~a (disabled)~%" b)
+             (format t "~&=== skipping disabled ~a~%" b)
              (progn
                (bench-gc)
                (with-slots (disabled-for setup function short runs) b
