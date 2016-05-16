@@ -3,7 +3,7 @@
 ;; Author: Eric Marsden  <emarsden@laas.fr>
 ;; Maintainer: Daniel Kochmański <daniel@turtleware.eu>
 ;;
-;; Time-stamp: <2016-05-13 19:42:30 jack>
+;; Time-stamp: <2016-05-16 11:38:02 jack>
 ;;
 ;;
 ;; The benchmarks consist of
@@ -123,7 +123,7 @@
       (get-decoded-time)
     (declare (ignore second))
     (format nil "~aCL-benchmark-~d~2,'0d~2,'0dT~2,'0d~2,'0d"
-            "bench:result;"
+            (namestring *output-dir*)
             year month date hour minute)))
 
 ;; grr, CLISP doesn't implement ~<..~:>

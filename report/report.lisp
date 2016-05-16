@@ -1,7 +1,7 @@
 ;;; report.lisp
 ;;
 ;; Author: Eric Marsden  <emarsden@laas.fr>
-;; Time-stamp: <2016-05-13 12:25:00 jack>
+;; Time-stamp: <2016-05-16 11:36:51 jack>
 ;;
 ;;
 ;; When loaded into CMUCL, this should generate a report comparing the
@@ -21,7 +21,7 @@
 
 (defun bench-analysis ()
   (let (data implementations benchmarks)
-    (dolist (f (directory "bench:result;CL-benchmark*.*"))
+    (dolist (f (directory (merge-pathnames "CL-benchmark*.*" *output-dir*)))
       (ignore-errors
         (with-open-file (f f :direction :input)
           (let ((*read-eval* nil))

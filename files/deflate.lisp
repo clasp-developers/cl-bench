@@ -292,7 +292,7 @@
 
 
 (defun run-deflate-file ()
-  (test-deflate-file "bench:misc;message.gz"))
+  (test-deflate-file (merge-pathnames "message.gz" *misc-dir*)))
 
 
 ;; EOF

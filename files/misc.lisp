@@ -1,6 +1,6 @@
 ;;; misc.lisp
 ;;;
-;;; Time-stamp: <2016-05-13 11:47:06 jack>
+;;; Time-stamp: <2016-05-16 11:31:42 jack>
 
 (defpackage :cl-bench.misc
   (:use :common-lisp)
@@ -13,14 +13,14 @@
 (in-package :cl-bench.misc)
 
 (defun run-compiler ()
-  (compile-file #P"bench:test;gabriel.lisp"
+  (compile-file (merge-pathnames "gabriel.lisp" *misc-dir*)
                 :print nil
                 #-gcl :verbose #-gcl nil))
 
 (defun run-fasload ()
   (load
    (compile-file-pathname
-    #P"bench:test;gabriel.lisp")))
+    (merge-pathnames "gabriel.lisp" *misc-dir*))))
 
 
 ;; by Gene Luks (adapted from the Larceny benchmarks)

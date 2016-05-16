@@ -10,13 +10,25 @@
   (error "use metering"))
 
 (let ((root-dir (asdf:system-source-directory '#:cl-bench)))
+  (defparameter *root-dir* root-dir
+    "Toplevel directory of the CL-BENCH system.")
+  (defparameter *misc-dir* (merge-pathnames "misc/" root-dir)
+    "Directory containing auxilliary files.")
+  (defparameter *output-dir* (merge-pathnames "output/" root-dir)
+    "Directory where the results are stored.")
+
+  ;; don't use logical pathnames (not well supported on all active
+  ;; implementations. These would be the translations if everything
+  ;; would work as expected.
+  #+(or)
   (setf (logical-pathname-translations "bench")
         `(("root;*.*.*"   ,root-dir)
           ("test;*.*.*"   ,(merge-pathnames "files/"  root-dir))
           ("misc;*.*.*"   ,(merge-pathnames "misc/" root-dir))
           ("result;*.*.*" ,(merge-pathnames "output/" root-dir))
-          ("**;*.*.*"     ,(merge-pathnames "**/" root-dir))))
-  (ensure-directories-exist (merge-pathnames "output/" root-dir)))
+          ("**;*.*.*"     ,(merge-pathnames "**/" root-dir)))))
+
+(ensure-directories-exist *output-dir*)
 
 
 ;;; This is disabled after the consultation with the ABCL maintainer
