@@ -1,9 +1,10 @@
 ;;; misc.lisp
 ;;;
-;;; Time-stamp: <2016-05-16 11:31:42 jack>
+;;; Time-stamp: <2016-05-16 15:39:28 jack>
 
 (defpackage :cl-bench.misc
   (:use :common-lisp)
+  (:import-from cl-bench #:*misc-dir*)
   (:export #:run-compiler
            #:run-fasload
            #:run-permutations

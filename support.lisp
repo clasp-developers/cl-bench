@@ -3,7 +3,7 @@
 ;; Author: Eric Marsden  <emarsden@laas.fr>
 ;; Maintainer: Daniel Kochmański <daniel@turtleware.eu>
 ;;
-;; Time-stamp: <2016-05-16 11:38:02 jack>
+;; Time-stamp: <2016-05-16 15:39:14 jack>
 ;;
 ;;
 ;; The benchmarks consist of
@@ -108,11 +108,12 @@
            (*compile-print* nil))
        (bench-report-header)
        (dolist (b (reverse *benchmarks*))
-         (if (benchmark-disabled-for b)
+         (if (some #'(lambda (bench) (member bench *features*))
+                   (benchmark-disabled-for b))
              (format t "~&=== skipping disabled ~a~%" b)
              (progn
                (bench-gc)
-               (with-slots (disabled-for setup function short runs) b
+               (with-slots (setup function short runs) b
                  (when setup (funcall setup))
                  (format t "~&=== running ~a~%" b)
                  (bench-report function short runs)))))

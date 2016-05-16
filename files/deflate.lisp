@@ -7,6 +7,7 @@
 ;;;;  (c) copyright 1997,1998 by Gilbert Baumann
 (defpackage :cl-bench.deflate
   (:use :common-lisp)
+  (:import-from cl-bench #:*misc-dir*)
   (:export #:run-deflate-file))
 
 (in-package :cl-bench.deflate)
