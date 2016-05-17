@@ -28,7 +28,7 @@
 ;; - some renamings to be closer to standard CL style (eg global
 ;;   variable names with asterisk). Only partially done...
 
-(defpackage :cl-bench.gabriel
+(defpackage :cl-bench.gabriel.test
   (:use :common-lisp)
   (:export #:boyer
            #:browse
@@ -53,7 +53,7 @@
            #:run-traverse
            #:run-triangle))
 
-(in-package :cl-bench.gabriel)
+(in-package :cl-bench.gabriel.test)
 
 ;;; BOYER -- Logic programming benchmark, originally written by Bob Boyer.
 ;;; Fairly CONS intensive.
