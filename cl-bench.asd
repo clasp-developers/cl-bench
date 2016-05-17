@@ -26,16 +26,16 @@
                  (:file "misc")))
                (:file "tests")))
 
-#+(or)
 (asdf:defsystem #:cl-bench/report
   :description "cl-bench reporting facilities"
   :author "Eric Marsden"
   :maintainer "Daniel 'jackdaniel' Kochmański"
   :license "Public Domain"
-  :depends-on (#:cl-bench)
+  :depends-on (#:cl-bench #:external-program #:log4cl #:trivial-features)
   :serial t
-  :components (:module "report"
-               :compoentnts
-               (:file "report")
-               (:file "graph-report")
-               (:file "pdf-report")))
+  :components ((:module "report"
+                :components
+                ((:file "lisp-exe")
+                 (:file "report")
+                 (:file "graph-report")
+                 ))))

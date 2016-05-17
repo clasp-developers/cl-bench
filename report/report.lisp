@@ -12,14 +12,14 @@
 ;; FIXME could create graphical version using ploticus
 
 
-(in-package :cl-user)
+(in-package :cl-bench)
 
-(defconstant +implementation+
+(defparameter +implementation+
   (concatenate 'string
                (lisp-implementation-type) " "
                (lisp-implementation-version)))
 
-(defun bench-analysis ()
+(defun bench-analysis-table ()
   (let (data implementations benchmarks)
     (dolist (f (directory (merge-pathnames "CL-benchmark*.*" *output-dir*)))
       (ignore-errors
@@ -55,7 +55,7 @@
     (terpri)
     (force-output)))
 
-(bench-analysis)
-(quit)
+;; (bench-analysis)
+;; (quit)
 
 ;; EOF

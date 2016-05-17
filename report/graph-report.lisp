@@ -9,6 +9,8 @@
 ;; tested. Reads the output/CL-benchmark* files to obtain data from
 ;; previous runs.
 
+(in-package #:cl-bench)
+
 (defparameter *screen-width* 80)
 
 (defun print-bar (scale)
@@ -21,9 +23,9 @@
 	    (dotimes (i (round chars))
 	      (princ #\#))))))
 
-(defun bench-analysis ()
+(defun bench-analysis-graph ()
   (let (data implementations benchmarks impl-scores)
-    (dolist (f (directory "/var/tmp/CL-benchmark*.*"))
+    (dolist (f (directory (merge-pathnames "CL-benchmark*.*" *output-dir*)))
        (with-open-file (f f :direction :input)
          (let ((*read-eval* nil))
            (push (read f) data))))
@@ -79,7 +81,7 @@
 
     (force-output)))
 
-(bench-analysis)
-(quit)
+;; (bench-analysis)
+;; (quit)
 
 ;; EOF
