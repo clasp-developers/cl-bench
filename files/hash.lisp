@@ -24,14 +24,11 @@
         ((probe-file "/usr/dict/words")
          (read-many-lines "/usr/dict/words"))))
 
+(defparameter +digit+ "0123456789ABCDEF")
 
-
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (defconstant +digit+ "0123456789ABCDEF")
-
-  (defconstant +digits-needed+
-    #((10 100 1000 10000 100000 10000000 100000000 536870911)
-      (16 256 4096 65536 1048576 16777216 268435456 4294967296 536870911))))
+(defparameter +digits-needed+
+  #((10 100 1000 10000 100000 10000000 100000000 536870911)
+    (16 256 4096 65536 1048576 16777216 268435456 4294967296 536870911)))
 
 (defvar *table* nil)
 
