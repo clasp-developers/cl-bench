@@ -96,6 +96,18 @@
       (progn ,@body)
       (bench-report-footer))))
 
+(setf (fdefinition 'filter) #'remove-if-not)
+
+(defun bench-run-1 (&key names groups
+                    &aux
+                      (names (ensure-list names))
+                      (groups (ensure-list groups)))
+  (let ((*benchmarks* (union
+                       (filter (lambda (%) (member % names))  *benchmarks* :key #'benchmark-name)
+                       (filter (lambda (%) (member % groups)) *benchmarks* :key #'benchmark-group))))
+    (when *benchmarks*
+      (print *benchmarks*)
+      (bench-run))))
 
 (defun bench-run ()
   (with-open-file (f (benchmark-report-file)

@@ -2,5 +2,7 @@
 
 (defpackage #:cl-bench
   (:use #:cl)
-  (:export #:bench-run
+  (:import-from #:alexandria #:ensure-list)
+  (:export #:bench-run-1
+           #:bench-run
            #:defbench))
