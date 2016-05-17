@@ -132,14 +132,15 @@
     (setf (,(make-accessor-name depth width) self) ,(* depth width width))))
 
 (defun defclass-forms ()
-  (let (forms)
+  (let (forms init-forms)
     (loop :for width :to #.+hierarchy-width+ :do
          (push `(defclass ,(make-class-name 1 width) (class-0-0) ()) forms))
     (loop :for dpth :from 2 :to +hierarchy-depth+ :do
           (loop :for wdth :to #.+hierarchy-width+ :do
                 (push `(class-definition ,dpth ,wdth) forms)
-                (push `(init-instance-definition ,dpth ,wdth) forms)))
-    (nreverse forms)))
+                (push `(init-instance-definition ,dpth ,wdth) init-forms)))
+    (values (nreverse forms)
+            (nreverse init-forms))))
 
 (defun defmethod-forms ()
   (let (forms)
@@ -158,7 +159,9 @@
     (nreverse forms)))
 
 (defun run-defclass ()
-  (funcall (compile nil `(lambda () ,@(defclass-forms)))))
+  (multiple-value-bind (dc ic) (defclass-forms)
+    (funcall (compile nil `(lambda () ,@dc)))
+    (funcall (compile nil `(lambda () ,@ic)))))
 
 (defun run-defmethod ()
   (funcall (compile nil `(lambda () ,@(defmethod-forms)))))
