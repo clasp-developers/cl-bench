@@ -147,8 +147,10 @@
 ;;; Entering Corman Lisp debug loop.
 (defun bench-report-header ()
   (format *benchmark-output*
-          #-(or clisp ecl gcl cormanlisp) ";; -*- lisp -*-  ~a~%;;~%;; Implementation *features*:~%~@<;; ~@;~s~:>~%;;~%"
-          #+(or clisp ecl gcl cormanlisp) ";; -*- lisp -*- ~a~%;; Implementation *features*: ~s~%;;~%"
+          #-(or clisp gcl cormanlisp)
+          ";; -*- lisp -*-  ~a~%;;~%;; Implementation *features*:~%~@<;; ~@;~s~:>~%;;~%"
+          #+(or clisp gcl cormanlisp)
+          ";; -*- lisp -*-  ~a~%;;~%#| Implementation *features*: ~s |#~%;;~%"
           +implementation+ *features*)
   (format *benchmark-output*
           ";; Function                      real     user     sys       consed~%")
