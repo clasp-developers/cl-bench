@@ -4,3 +4,8 @@
 *.olisp
 *.lafsl
 output/
+*~
+*lx64fsl
+*\\#*\\#
+/report/#graph-report.lisp#
+/report/.#graph-report.lisp
