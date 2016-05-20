@@ -31,11 +31,10 @@
   :author "Eric Marsden"
   :maintainer "Daniel 'jackdaniel' Kochmański"
   :license "Public Domain"
-  :depends-on (#:cl-bench #:external-program #:log4cl #:trivial-features)
+  :depends-on (#:cl-bench #:cl-who)
   :serial t
   :components ((:module "report"
                 :components
-                ((:file "lisp-exe")
-                 (:file "report")
+                ((:file "report")
                  (:file "graph-report")
-                 ))))
+                 (:file "html-report")))))
