@@ -179,8 +179,8 @@
     (setq after-user (get-internal-run-time))
     (setq after-real (get-internal-real-time))
     ;; return real user sys consed
-    (values (/ (- after-real before-real) internal-time-units-per-second)
-            (/ (- after-user before-user) internal-time-units-per-second)
+    (values (coerce (/ (- after-real before-real) internal-time-units-per-second) 'float)
+            (coerce (/ (- after-user before-user) internal-time-units-per-second) 'float)
             0 0)))
 
 (eval-when (:load-toplevel :execute)
