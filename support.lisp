@@ -139,17 +139,8 @@
             (namestring *output-dir*)
             year month date hour minute)))
 
-;; grr, CLISP doesn't implement ~<..~:>
-
-;; CormanLisp bug:
-;;; An error occurred in function FORMAT:
-;;; Error: Invalid format directive : character #\< in control string ";; -*- lisp -*-  ~a~%;;~%;; Implementation *features*:~%~@<;; ~@;~s~:>~%;;~%"
-;;; Entering Corman Lisp debug loop.
 (defun bench-report-header ()
   (format *benchmark-output*
-          #-(or clisp gcl cormanlisp)
-          ";; -*- lisp -*-  ~a~%;;~%;; Implementation *features*:~%~@<;; ~@;~s~:>~%;;~%"
-          #+(or clisp gcl cormanlisp)
           ";; -*- lisp -*-  ~a~%;;~%#| Implementation *features*: ~s |#~%;;~%"
           +implementation+ *features*)
   (format *benchmark-output*

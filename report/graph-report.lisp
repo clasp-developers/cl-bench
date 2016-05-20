@@ -1,6 +1,6 @@
 ;;; graph-report.lisp
 ;;
-;; Author: Johannes Grødem <johs@copyleft.no>
+;; Author: Johannes Grrdem <johs@copyleft.no>
 ;; Time-stamp: <2016-05-13 12:25:11 jack>
 ;;
 ;;
