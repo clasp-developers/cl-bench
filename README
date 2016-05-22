@@ -39,10 +39,34 @@ the performance of all aspects of an implementation. Remember that the
 only real benchmark is your application: this code is only
 representative of real-life programs to a limited extent.
 
-
-
 Running the suite
 =================
+
+Put cl-bench directory in the asdf:*central-registry* or link it in
+~/quicklisp/local-projects/ directory and load the CL-BENCH. CL-BENCH
+depends on the ALEXANDRIA and TRIVIAL-GARBAGE libraries, while
+CL-BENCH/REPORT depends additionally on CL-WHO.
+
+   (ql:quickload 'cl-bench)
+   (cl-bench:bench-run)
+
+Benchmark results will be in the output/ directory in the CL-BENCH
+source tree directory.
+
+Generating reports
+==================
+
+To generate reports after running the tests on various
+implementations, issue the following:
+
+   (ql:quickload 'cl-bench/report)
+   (cl-bench:bench-analysis-page)
+
+Benchmarks report will be generated to the output/report.html file in
+the CL-BENCH source tree directory.
+
+Running the suite (obsolete)
+============================
 
 Each implementation has a run-<impl>.sh file, and a setup-<impl>.lisp
 file in the sysdep directory. To execute the test for CMUCL, for
