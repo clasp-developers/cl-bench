@@ -22,7 +22,8 @@
   (let* ((data (read-benchmarks))
          (implementations (mapcar #'car data))
          (benchmarks (reverse (mapcar #'first (cdr (first data))))))
-    (with-open-file (s #P"/tmp/bench.html" :direction :output :if-exists :supersede)
+    (with-open-file (s (merge-pathnames "report.html" *output-dir*)
+                       :direction :output :if-exists :supersede)
       (cl-who:with-html-output (s nil :prologue t)
         (cl-who:htm
          (:p (cl-who:fmt "~a ~a ~a"
