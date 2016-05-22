@@ -184,7 +184,8 @@
     :group :math
     :long "Calculating Ackermann's number (heavy recursion)"
     :function 'cl-bench.math:run-ackermann
-    :runs 1)
+    :runs 1
+    :disabled-for '(:clisp))
 
 (defbench mandelbrot/complex
     :group :math
