@@ -157,8 +157,7 @@
   (multiple-value-bind (real user sys consed)
       (bench-time function times name)
     (format *benchmark-output*
-            #-armedbear ";; ~25a ~8,2f ~8,2f ~8,2f ~12d"
-            #+armedbear ";; ~a ~f ~f ~f ~d"
+            ";; ~25a ~8,2f ~8,2f ~8,2f ~12d"
             name real user sys consed)
     (terpri *benchmark-output*)
     (force-output *benchmark-output*)
