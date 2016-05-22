@@ -25,7 +25,10 @@
     (with-open-file (s #P"/tmp/bench.html" :direction :output :if-exists :supersede)
       (cl-who:with-html-output (s nil :prologue t)
         (cl-who:htm
-         (:p "hello world!")
+         (:p (cl-who:fmt "~a ~a ~a"
+                         (machine-type)
+                         (machine-version)
+                         (machine-instance)))
          (:table
           :border 1
           (:tr (:td :style "max-width: 100px;")
@@ -52,7 +55,6 @@
                             (cell-style (color)
                               (format nil "background-color: ~A;" color)))
                        (cl-who:htm (:td :style (cell-style (cell-color r best))
-                                        (when r (cl-who:str r))))
-                       )))
-              )))))))
+                                        (when (and r (/= r -1))
+                                          (cl-who:str r))))))))))))))
     benchmarks))
