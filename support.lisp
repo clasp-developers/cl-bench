@@ -98,6 +98,25 @@
 
 (setf (fdefinition 'filter) #'remove-if-not)
 
+
+(defun bench-run-1 (benchmark &key force)
+  (multiple-value-bind (real user sys consed)
+      (if (and (not force)
+               (some #'(lambda (bench)
+                         (member bench *features*))
+                     (benchmark-disabled-for benchmark)))
+          (progn
+            (format t "~&=== skipping disabled ~a~%" benchmark))
+          (progn
+            (bench-gc)
+            (with-slots (setup function runs) benchmark
+              (when setup (funcall setup))
+              (format t "~&=== running ~a~%" benchmark)
+              (bench-time function runs))))
+    (push (list (slot-value benchmark 'short) real user sys consed)
+          *benchmark-results*)))
+
+#+ (or)
 (defun bench-run-1 (&key names groups
                     &aux
                       (names (ensure-list names))
@@ -120,15 +139,8 @@
            (*compile-print* nil))
        (bench-report-header)
        (dolist (b (reverse *benchmarks*))
-         (if (some #'(lambda (bench) (member bench *features*))
-                   (benchmark-disabled-for b))
-             (format t "~&=== skipping disabled ~a~%" b)
-             (progn
-               (bench-gc)
-               (with-slots (setup function short runs) b
-                 (when setup (funcall setup))
-                 (format t "~&=== running ~a~%" b)
-                 (bench-report function short runs)))))
+         (bench-run-1 b)
+         (bench-report (car *benchmark-results*)))
        (bench-report-footer))))
 
 (defun benchmark-report-file ()
@@ -152,24 +164,19 @@
   (format *benchmark-output* "~%~s~%"
           (cons +implementation+ *benchmark-results*)))
 
-;; generate a report to *benchmark-output* on the calling of FUNCTION
-(defun bench-report (function name times)
-  (multiple-value-bind (real user sys consed)
-      (bench-time function times name)
+;; generate a report to *benchmark-output* on the benchmark result
+(defun bench-report (bench-result)
+  (destructuring-bind (name real user sys consed) bench-result
     (format *benchmark-output*
             ";; ~25a ~8,2f ~8,2f ~8,2f ~12d"
             name real user sys consed)
     (terpri *benchmark-output*)
-    (force-output *benchmark-output*)
-    (push (cons name (list real user sys consed))
-          *benchmark-results*)))
-
+    (force-output *benchmark-output*)))
 
 ;; a generic timing function, that depends on GET-INTERNAL-RUN-TIME
 ;; and GET-INTERNAL-REAL-TIME returning sensible results. If a version
 ;; was defined in sysdep/setup-<impl>, we use that instead
-(defun generic-bench-time (fun times name)
-  (declare (ignore name))
+(defun generic-bench-time (fun times)
   (let (before-real after-real before-user after-user)
     (setq before-user (get-internal-run-time))
     (setq before-real (get-internal-real-time))
