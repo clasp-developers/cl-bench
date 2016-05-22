@@ -42,7 +42,7 @@
                                           (if (numberp ir)
                                               ir
                                               -1))))
-                   (best (apply #'min results)))
+                   (best (apply #'min (remove-if #'minusp results))))
               (cl-who:htm
               (:tr (:th (cl-who:str b))
                    (dolist (r results)
