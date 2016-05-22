@@ -10,3 +10,4 @@ output/
 /report/#graph-report.lisp#
 /report/.#graph-report.lisp
 *.lib
+/misc/gabriel.sse2f
