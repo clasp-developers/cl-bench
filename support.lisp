@@ -181,7 +181,7 @@
     ;; return real user sys consed
     (values (coerce (/ (- after-real before-real) internal-time-units-per-second) 'float)
             (coerce (/ (- after-user before-user) internal-time-units-per-second) 'float)
-            0 0)))
+            nil nil)))
 
 (eval-when (:load-toplevel :execute)
   (unless (fboundp 'bench-time)
