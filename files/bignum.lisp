@@ -84,6 +84,10 @@
         (do ((k 1 (1+ k)))
             ((> k N) (setq *y* p *z* q))
           (let ((w (+ u v)))
+            #+mkcl
+            (setf u v
+                  v w)
+            #-mkcl
             (shiftf u v w)
             (setq p (* p w))
             (setq q (lcm q w))))))))

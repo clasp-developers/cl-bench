@@ -130,6 +130,11 @@
 	   (p1c (if (< p1b 0)
 		    (+ p1b +m1+)
 		    p1b)))
+      #+mkcl
+      (setf (aref state 0) (aref state 1)
+            (aref state 1) (aref state 2)
+            (aref state 2) p1c)
+      #-mkcl
       (shiftf (aref state 0)
 	      (aref state 1)
 	      (aref state 2)
@@ -148,6 +153,11 @@
 	   (p2c (if (< p2b 0)
 		    (+ p2b +m2+)
 		    p2b)))
+      #+mkcl
+      (setf (aref state 3) (aref state 4)
+            (aref state 4) (aref state 5)
+            (aref state 5) p2c)
+      #-mkcl
       (shiftf (aref state 3)
 	      (aref state 4)
 	      (aref state 5)
