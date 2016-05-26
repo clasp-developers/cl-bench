@@ -172,8 +172,8 @@
 ;; allocate a large list of fixnums, and merge-sort the list so that
 ;; pointers in the list are maximally spread out over memory.
 (defun setup-walk-list/mess ()
-  (setf *big-mess-list* (make-big-list 2000000))
-  (sort! *big-mess-list* #'<))
+  (setf *big-mess-list*
+        (sort! (make-big-list 2000000) #'<)))
 
 (defun walk-list/mess ()
   (let ((before 0)
