@@ -81,7 +81,7 @@
 
 #+lispworks
 (progn
-  (setq system:stack-overflow-behaviour nil)
+  (setq system:*stack-overflow-behaviour* nil)
   (hcl:toggle-source-debugging nil))
 
 
