@@ -60,7 +60,7 @@ To generate reports after running the tests on various
 implementations, issue the following:
 
    (ql:quickload 'cl-bench/report)
-   (cl-bench:bench-analysis-page)
+   (cl-bench::bench-analysis-page)
 
 Benchmarks report will be generated to the output/report.html file in
 the CL-BENCH source tree directory.
