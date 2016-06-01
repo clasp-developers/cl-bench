@@ -179,7 +179,7 @@
     :group :math
     :function 'cl-bench.math:run-fib-ratio
     :runs 500
-    :disabled-for '(:clasp) )
+    :disabled-for '(:clasp))
 
 (defbench ackermann
     :group :math
@@ -318,7 +318,7 @@
     :long "Adding together two 3-dimensional arrays"
     :function 'cl-bench.arrays:bench-3d-arrays
     :runs 1
-    :disabled-for '(:lispworks-personal-edition :ALLEGRO-CL-EXPRESS))
+    :disabled-for '(:lispworks-personal-edition :allegro-cl-express))
 
 ;; Poplog seems to have a buggy implementation of bitvectors
 (defbench bitvectors
@@ -326,7 +326,7 @@
     :long "BIT-XOR, BIT-AND on big bitvectors"
     :function 'cl-bench.arrays:bench-bitvectors
     :runs 3
-    :disabled-form '(:lispworks-personal-edition poplog))
+    :disabled-form '(:lispworks-personal-edition :poplog))
 
 (defbench bench-strings
     :group :sequence
