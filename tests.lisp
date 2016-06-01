@@ -32,7 +32,7 @@
     :setup 'cl-bench.misc::setup-walk-list/seq
     :function 'cl-bench.misc:walk-list/seq
     :runs 2
-    :disabled-for '(:lispworks-personal-edition :armedbear :ALLEGRO-CL-EXPRESS))
+    :disabled-for '(:lispworks-personal-edition :armedbear :allegro-cl-express :ecl-bytecmp))
 
 (defbench walk-list/mess
     :group :misc
@@ -40,7 +40,7 @@
     :setup 'cl-bench.misc::setup-walk-list/mess
     :function 'cl-bench.misc:walk-list/mess
     :runs 1
-    :disabled-for '(:lispworks-personal-edition :armedbear :poplog :ALLEGRO-CL-EXPRESS :clasp))
+    :disabled-for '(:lispworks-personal-edition :armedbear :poplog :allegro-cl-express :clasp :ecl-bytecmp))
 
 (defbench boyer
   :group :gabriel

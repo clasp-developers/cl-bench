@@ -38,11 +38,12 @@
           (dolist (b benchmarks)
             (let* ((results (loop :for i in implementations
                                :collect (let* ((id (cdr (assoc i data :test #'string=)))
-                                               (ir (third (assoc b id :test #'string=))))
+                                               (ir #|cons is fifth|#
+                                                (third (assoc b id :test #'string=))))
                                           (if (numberp ir)
                                               ir
                                               -1))))
-                   (best (apply #'min (remove-if #'minusp results))))
+                   (best (apply #'min (or (remove-if #'minusp results) '(0)))))
               (cl-who:htm
               (:tr (:th (cl-who:str b))
                    (dolist (r results)
