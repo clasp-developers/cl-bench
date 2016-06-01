@@ -32,7 +32,7 @@
     :setup 'cl-bench.misc::setup-walk-list/seq
     :function 'cl-bench.misc:walk-list/seq
     :runs 2
-    :disabled-for '(:lispworks-personal-edition :armedbear))
+    :disabled-for '(:lispworks-personal-edition :armedbear :ALLEGRO-CL-EXPRESS))
 
 (defbench walk-list/mess
     :group :misc
@@ -40,7 +40,7 @@
     :setup 'cl-bench.misc::setup-walk-list/mess
     :function 'cl-bench.misc:walk-list/mess
     :runs 1
-    :disabled-for '(:lispworks-personal-edition :armedbear :poplog))
+    :disabled-for '(:lispworks-personal-edition :armedbear :poplog :ALLEGRO-CL-EXPRESS :clasp))
 
 (defbench boyer
   :group :gabriel
@@ -178,7 +178,8 @@
 (defbench fib-ratio
     :group :math
     :function 'cl-bench.math:run-fib-ratio
-    :runs 500)
+    :runs 500
+    :disabled-for '(:clasp) )
 
 (defbench ackermann
     :group :math
@@ -191,7 +192,8 @@
     :group :math
     :long "Mandelbrot Set computation using complex numbers"
     :function 'cl-bench.math:run-mandelbrot/complex
-    :runs 100)
+    :runs 100
+    :disabled-for '(:clasp))
 
 (defbench mandelbrot/dfloat
     :group :math
@@ -247,22 +249,26 @@
 (defbench pi-decimal/small
     :group :bignum
     :function 'cl-bench.bignum:run-pi-decimal/small
-    :runs 100)
+    :runs 100
+    :disabled-for '(:clasp))
 
 (defbench pi-decimal/big
     :group :bignum
     :function 'cl-bench.bignum:run-pi-decimal/big
-    :runs 2)
+    :runs 2
+    :disabled-for '(:clasp))
 
 (defbench pi-atan
     :group :bignum
     :function 'cl-bench.bignum:run-pi-atan
-    :runs 200)
+    :runs 200
+    :disabled-for '(:clasp))
 
 (defbench pi-ratios
     :group :bignum
     :function 'cl-bench.ratios:run-pi-ratios
-    :runs 2)
+    :runs 2
+    :disabled-for '(:clasp))
 
 (defbench hash-strings
     :group :hash
@@ -289,7 +295,8 @@
 (defbench deflate-file
     :group :misc
     :function 'cl-bench.deflate:run-deflate-file
-    :runs 100)
+    :runs 100
+    :disabled-for '(:clasp))
 
 ;; these tests exceed the limited stack size in the trial version of LW
 (defbench 1d-arrays
@@ -311,7 +318,7 @@
     :long "Adding together two 3-dimensional arrays"
     :function 'cl-bench.arrays:bench-3d-arrays
     :runs 1
-    :disabled-for '(:lispworks-personal-edition))
+    :disabled-for '(:lispworks-personal-edition :ALLEGRO-CL-EXPRESS))
 
 ;; Poplog seems to have a buggy implementation of bitvectors
 (defbench bitvectors
@@ -344,7 +351,7 @@
     :long "WITH-OUTPUT-TO-STRING and much output"
     :function 'cl-bench.arrays:bench-string-concat
     :runs 1
-    :disabled-for '(:allegro :lispworks-personal-edition :poplog))
+    :disabled-for '(:allegro :lispworks-personal-edition :poplog :clisp))
 
 (defbench search-sequence
     :group :sequence
