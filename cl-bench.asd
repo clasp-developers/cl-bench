@@ -5,7 +5,7 @@
   :author "Eric Marsden"
   :maintainer "Daniel 'jackdaniel' Kochmański"
   :license "Public Domain"
-  :depends-on (#:alexandria #:trivial-garbage)
+  :depends-on (#:trivial-garbage)
   :serial t
   :components ((:file "package")
                (:file "cl-bench")
