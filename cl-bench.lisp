@@ -89,3 +89,13 @@
 (progn
   (setf (sb-ext:bytes-consed-between-gcs) 25000000)
   (setq sb-ext:*intexp-maximum-exponent* 100000))
+
+ ;; i.e GCL
+(eval-when (compile load eval)
+  (unless (fboundp 'fdefinition)
+    (eval-when (load eval)
+      (warn "This is not ANSI conforming Common Lisp. Expect problems."))
+    (defun fdefinition (symbol)
+      (symbol-function symbol))
+    (defsetf fdefinition (name) (new-definition)
+      `(setf (symbol-function ,name) ,new-definition))))
