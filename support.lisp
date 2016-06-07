@@ -96,9 +96,6 @@
       (progn ,@body)
       (bench-report-footer))))
 
-(setf (fdefinition 'filter) #'remove-if-not)
-
-
 (defun bench-run-1 (benchmark &key force)
   (multiple-value-bind (real user sys consed)
       (if (and (not force)
@@ -115,18 +112,6 @@
               (bench-time function runs))))
     (push (list (slot-value benchmark 'short) real user sys consed)
           *benchmark-results*)))
-
-#+ (or)
-(defun bench-run-1 (&key names groups
-                    &aux
-                      (names (ensure-list names))
-                      (groups (ensure-list groups)))
-  (let ((*benchmarks* (union
-                       (filter (lambda (%) (member % names))  *benchmarks* :key #'benchmark-name)
-                       (filter (lambda (%) (member % groups)) *benchmarks* :key #'benchmark-group))))
-    (when *benchmarks*
-      (print *benchmarks*)
-      (bench-run))))
 
 (defun bench-run ()
   (with-open-file (f (benchmark-report-file)
@@ -191,9 +176,6 @@
 
 (eval-when (:load-toplevel :execute)
   (unless (fboundp 'bench-time)
-    ;; GCL as of 20040628 does not implement (setf fdefinition)
-    #-gcl (setf (fdefinition 'bench-time) #'generic-bench-time)
-    #+gcl (defun bench-time (fun times name) (generic-bench-time fun times name))))
-
+    (setf (fdefinition 'bench-time) #'generic-bench-time)))
 
 ;; EOF
