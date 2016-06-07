@@ -19,7 +19,7 @@
 
   ;; don't use logical pathnames (not well supported on all active
   ;; implementations. These would be the translations if everything
-  ;; would work as expected.
+  ;; would work as expected).
   #+(or)
   (setf (logical-pathname-translations "bench")
         `(("root;*.*.*"   ,root-dir)
