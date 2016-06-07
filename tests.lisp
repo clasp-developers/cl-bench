@@ -400,6 +400,7 @@
     :short "CLOS/method+after"
     :long "Define after methods on our instances, then run some method calls"
     :function 'cl-bench.clos:methodcalls/simple+after
+    :disabled-for '(:gcl)
     :runs 2)
 
 (defbench methodcalls/complex
@@ -408,12 +409,13 @@
     :long "Run methodcalls with and method combination."
     :function 'cl-bench.clos:methodcalls/complex
     :runs 5
-    :disabled-for '(:clisp :poplog))
+    :disabled-for '(:clisp :poplog :gcl))
 
 (defbench eql-specialized-fib
     :group :clos
     :long "Fibonnaci function implemented with EQL specialization"
     :function 'cl-bench.clos:run-eql-fib
-    :runs 2)
+    :runs 2
+    :disabled-for '(:gcl))
 
 ;; EOF

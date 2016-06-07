@@ -76,11 +76,11 @@
 
 (defmethod simple-method ((self class-0-0) other) other)
 
-#-(or clisp poplog)
+#-(or clisp poplog gcl)
 (defgeneric complex-method (a b &rest rest)
   (:method-combination and))
 
-#-(or clisp poplog)
+#-(or clisp poplog gcl)
 (defmethod complex-method and ((self class-0-0) other &rest rest)
    (declare (ignore rest))
    other)
