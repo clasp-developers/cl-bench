@@ -87,8 +87,7 @@
 
 #+sbcl
 (progn
-  (setf (sb-ext:bytes-consed-between-gcs) 25000000)
-  (setq sb-ext:*intexp-maximum-exponent* 100000))
+  (setf (sb-ext:bytes-consed-between-gcs) 25000000))
 
  ;; i.e GCL
 (eval-when (compile load eval)
