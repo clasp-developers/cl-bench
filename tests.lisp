@@ -40,7 +40,7 @@
     :setup 'cl-bench.misc::setup-walk-list/mess
     :function 'cl-bench.misc:walk-list/mess
     :runs 1
-    :disabled-for '(:lispworks-personal-edition :armedbear :poplog :allegro-cl-express :clasp :ecl-bytecmp :genera))
+    :disabled-for '(:lispworks-personal-edition :armedbear :poplog :allegro-cl-express :clasp :ecl-bytecmp :genera :sbcl))
 
 (defbench boyer
   :group :gabriel
