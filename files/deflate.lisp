@@ -1,4 +1,4 @@
-;;;; -*- Mode: Lisp; Syntax: Common-Lisp; Package: png; -*-
+;;;; -*- Mode: Lisp; Syntax: Common-Lisp; -*-
 ;;;; -------------------------------------------------------------------
 ;;;;     Title: The DEFLATE Compression (rfc1951)
 ;;;;   Created: Thu Apr 24 22:12:58 1997

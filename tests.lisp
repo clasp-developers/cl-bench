@@ -40,7 +40,7 @@
     :setup 'cl-bench.misc::setup-walk-list/mess
     :function 'cl-bench.misc:walk-list/mess
     :runs 1
-    :disabled-for '(:lispworks-personal-edition :armedbear :poplog :allegro-cl-express :clasp :ecl-bytecmp))
+    :disabled-for '(:lispworks-personal-edition :armedbear :poplog :allegro-cl-express :clasp :ecl-bytecmp :genera))
 
 (defbench boyer
   :group :gabriel
@@ -186,7 +186,7 @@
     :long "Calculating Ackermann's number (heavy recursion)"
     :function 'cl-bench.math:run-ackermann
     :runs 1
-    :disabled-for '(:clisp))
+    :disabled-for '(:clisp :genera))
 
 (defbench mandelbrot/complex
     :group :math
@@ -351,7 +351,7 @@
     :long "WITH-OUTPUT-TO-STRING and much output"
     :function 'cl-bench.arrays:bench-string-concat
     :runs 1
-    :disabled-for '(:allegro :lispworks-personal-edition :poplog :clisp))
+    :disabled-for '(:allegro :lispworks-personal-edition :poplog :clisp :genera))
 
 (defbench search-sequence
     :group :sequence
