@@ -1,5 +1,13 @@
 ;;;; cl-bench.asd
 
+#+genera
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (multiple-value-bind (major minor)
+      (sct:get-release-version)
+    (declare (ignore minor))
+    (unless (>= major 9)
+      (error "CL-BENCH requires Genera 9.0 or later."))))
+
 (asdf:defsystem #:cl-bench
   :description "Common Lisp implementation benchmarking"
   :author "Eric Marsden"

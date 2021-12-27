@@ -6,6 +6,9 @@
 output/
 *~
 *lx64fsl
+*.bin
+*.ibin
+*.vbin
 *\\#*\\#
 /report/#graph-report.lisp#
 /report/.#graph-report.lisp
