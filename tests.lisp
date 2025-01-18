@@ -10,7 +10,7 @@
     :group :misc
     :function 'cl-bench.misc:run-compiler
     :long "Compilation of the Gabriel benchmarks"
-    :runs 3
+    :runs 10
     :disabled-for '(:gcl :armedbear))
 
 (defbench load-fasl
@@ -23,7 +23,7 @@
     :group :misc
     :long "traversal of a large, linked, self-sharing structure"
     :function 'cl-bench.misc:run-permutations
-    :runs 2
+    :runs 3
     :disabled-for '(:lispworks-personal-edition))
 
 (defbench walk-list/seq
@@ -31,7 +31,7 @@
     :long "Walk a list of 2M fixnums that were sequentially allocated"
     :setup 'cl-bench.misc::setup-walk-list/seq
     :function 'cl-bench.misc:walk-list/seq
-    :runs 2
+    :runs 100
     :disabled-for '(:lispworks-personal-edition :armedbear :allegro-cl-express))
 
 (defbench walk-list/mess
@@ -39,7 +39,7 @@
     :long "Walk a list of 2M fixnums that were mergesorted to spread pointers"
     :setup 'cl-bench.misc::setup-walk-list/mess
     :function 'cl-bench.misc:walk-list/mess
-    :runs 1
+    :runs 10
     :disabled-for '(:lispworks-personal-edition :armedbear :poplog :allegro-cl-express :clasp :ecl-bytecmp :genera :sbcl))
 
 (defbench boyer
@@ -102,30 +102,30 @@
   :group :gabriel
   :long "Forest Baskett's Puzzle, exercising simple-vectors"
   :function 'cl-bench.gabriel:run-puzzle
-  :runs 1500)
+  :runs 150)
 
 (defbench tak
   :group :gabriel
   :function 'cl-bench.gabriel:run-tak
-  :runs 500)
+  :runs 300)
 
 (defbench ctak
     :group :gabriel
     :long "TAKeuchi function using the catch/throw facility"
     :function 'cl-bench.gabriel:run-ctak
-    :runs 900)
+    :runs 300)
 
 (defbench trtak
     :group :gabriel
     :long "TAKeuchi function without tail recursion"
     :function 'cl-bench.gabriel:run-trtak
-    :runs 500)
+    :runs 300)
 
 (defbench takl
     :group :gabriel
     :long "TAKeuchi function with lists as counters"
     :function 'cl-bench.gabriel:run-takl
-    :runs 150)
+    :runs 100)
 
 (defbench stak
     :group :gabriel
@@ -149,7 +149,7 @@
   :group :gabriel
   :long "Creates and traverses a tree structure"
   :function 'cl-bench.gabriel:run-traverse
-  :runs 15)
+  :runs 10)
 
 (defbench triangle
   :group :gabriel
@@ -216,27 +216,27 @@
 (defbench bignum/elem-100-1000
     :group :bignum
     :function 'cl-bench.bignum:run-elem-100-1000
-    :runs 1)
+    :runs 10)
 
 (defbench bignum/elem-1000-100
     :group :bignum
     :function 'cl-bench.bignum:run-elem-1000-100
-    :runs 1)
+    :runs 10)
 
 (defbench bignum/elem-10000-1
     :group :bignum
     :function 'cl-bench.bignum:run-elem-10000-1
-    :runs 1)
+    :runs 10)
 
 (defbench bignum/pari-100-10
     :group :bignum
     :function 'cl-bench.bignum:run-pari-100-10
-    :runs 1)
+    :runs 10)
 
 (defbench bignum/pari-200-5
     :group :bignum
     :function 'cl-bench.bignum:run-pari-200-5
-    :runs 1)
+    :runs 10)
 
 ;; this one takes ages to run
 #+slow-tests
@@ -303,14 +303,14 @@
     :group :sequence
     :long "Adding together two vectors"
     :function 'cl-bench.arrays:bench-1d-arrays
-    :runs 1
+    :runs 4
     :disabled-for '(:lispworks-personal-edition))
 
 (defbench 2d-arrays
     :group :sequence
     :long "Adding together two 2-dimensional arrays"
     :function 'cl-bench.arrays:bench-2d-arrays
-    :runs 1
+    :runs 2
     :disabled-for '(:lispworks-personal-edition))
 
 (defbench 3d-arrays
@@ -332,7 +332,7 @@
     :group :sequence
     :long "Allocate and fill large strings"
     :function 'cl-bench.arrays:bench-strings
-    :runs 1
+    :runs 3
     :disabled-for '(:lispworks-personal-edition))
 
 (defbench fill-strings/adjust
@@ -357,7 +357,7 @@
     :group :sequence
     :long "FIND, FIND-IF, POSITION on a simple-vector"
     :function 'cl-bench.arrays:bench-search-sequence
-    :runs 1
+    :runs 2
     :disabled-for '(:lispworks-personal-edition))
 
 (defbench clos-defclass
@@ -365,28 +365,28 @@
     :short "CLOS/defclass"
     :long "Defines a class hierarchy"
     :function 'cl-bench.clos:run-defclass
-    :runs 1)
+    :runs 2)
 
 (defbench clos-defmethod
     :group :clos
     :short "CLOS/defmethod"
     :long "Defines methods on the class hierarchy"
     :function 'cl-bench.clos:run-defmethod
-    :runs 1)
+    :runs 10)
 
 (defbench clos-instantiate
     :group :clos
     :short "CLOS/instantiate"
     :long "Instantiates a complicated class hierarchy"
     :function 'cl-bench.clos:make-instances
-    :runs 2)
+    :runs 4)
 
 (defbench clos-instantiate
     :group :clos
     :short "CLOS/simple-instantiate"
     :long "Instantiates a simple class hierarchy"
     :function 'cl-bench.clos:make-instances/simple
-    :runs 200)
+    :runs 100)
 
 (defbench methodcalls
     :group :clos
@@ -401,7 +401,7 @@
     :long "Define after methods on our instances, then run some method calls"
     :function 'cl-bench.clos:methodcalls/simple+after
     :disabled-for '(:gcl)
-    :runs 2)
+    :runs 5)
 
 (defbench methodcalls/complex
     :group :clos
@@ -415,7 +415,7 @@
     :group :clos
     :long "Fibonnaci function implemented with EQL specialization"
     :function 'cl-bench.clos:run-eql-fib
-    :runs 2
+    :runs 5
     :disabled-for '(:gcl))
 
 ;; EOF
