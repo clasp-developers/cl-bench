@@ -32,7 +32,7 @@
     :setup 'cl-bench.misc::setup-walk-list/seq
     :function 'cl-bench.misc:walk-list/seq
     :runs 2
-    :disabled-for '(:lispworks-personal-edition :armedbear :allegro-cl-express :ecl-bytecmp))
+    :disabled-for '(:lispworks-personal-edition :armedbear :allegro-cl-express))
 
 (defbench walk-list/mess
     :group :misc
