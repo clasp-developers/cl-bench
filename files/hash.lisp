@@ -10,7 +10,8 @@
            #:hash-integers
            #:compute-sxhash
            #:compute-sxhash/small
-           #:compute-sxhash/large))
+           #:compute-sxhash/large
+           #:compute-sxhash/fixnum))
 
 (in-package :cl-bench.hash)
 
@@ -76,5 +77,15 @@
 
 (defun compute-sxhash/large ()
   (compute-sxhash 1024))
+
+(defun compute-sxhash/fixnum (&optional (max most-positive-fixnum))
+  (let ((result 0)
+        value1 value2)
+    (dotimes (i 2000 result)
+      (setf value1 (random max))
+      (setf value2 (- (random max)))
+      (dotimes (i 2000)
+        (setf result (logxor result (sxhash value1)))
+        (setf result (logxor result (sxhash value2)))))))
 
 ;; EOF

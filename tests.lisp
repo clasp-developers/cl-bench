@@ -292,6 +292,12 @@
     :function 'cl-bench.hash:compute-sxhash/large
     :runs 2)
 
+(defbench compute-sxhash/fixnum
+    :group :hash
+    :long "Estimate hashing performance without hash tables"
+    :function 'cl-bench.hash:compute-sxhash/fixnum
+    :runs 20)
+
 (defbench slurp-lines
     :group :gc
     :long "Line-by-line read of a large file (mostly testing allocation speed)"
