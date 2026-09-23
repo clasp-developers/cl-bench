@@ -7,7 +7,10 @@
   (:use :common-lisp)
   (:export #:run-slurp-lines
            #:hash-strings
-           #:hash-integers))
+           #:hash-integers
+           #:compute-sxhash
+           #:compute-sxhash/small
+           #:compute-sxhash/large))
 
 (in-package :cl-bench.hash)
 
@@ -31,7 +34,6 @@
     (16 256 4096 65536 1048576 16777216 268435456 4294967296 536870911)))
 
 (defvar *table* nil)
-
 
 (defun fixnum-to-string (n base)
   (declare (fixnum n base))
@@ -58,5 +60,21 @@
   (dotimes (i 100000)
     (setf (gethash i *table*) (1+ i)))
   (maphash (lambda (key value) (incf (gethash key *table*) value)) *table*))
+
+(defun compute-sxhash (&optional (size 32))
+  (declare (fixnum size))
+  (let ((string (make-string size :initial-element
+                             (ecase (random 3) (0 #\x) (1 #\y) (2 #\z))))
+        (result 0))
+    (dotimes (i 4000000 result)
+      (setf (char string (random size))
+            (ecase (random 3) (0 #\x) (1 #\y) (2 #\z)))
+      (setf result (logxor result (sxhash string))))))
+
+(defun compute-sxhash/small ()
+  (compute-sxhash 6))
+
+(defun compute-sxhash/large ()
+  (compute-sxhash 1024))
 
 ;; EOF
