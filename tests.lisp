@@ -298,6 +298,12 @@
     :function 'cl-bench.hash:compute-sxhash/fixnum
     :runs 20)
 
+(defbench compute-sxhash/mixbag
+    :group :hash
+    :long "Estimate hashing performance without hash tables"
+    :function 'cl-bench.hash:compute-sxhash/mixbag
+    :runs 10)
+
 (defbench slurp-lines
     :group :gc
     :long "Line-by-line read of a large file (mostly testing allocation speed)"

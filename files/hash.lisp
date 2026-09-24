@@ -11,7 +11,8 @@
            #:compute-sxhash
            #:compute-sxhash/small
            #:compute-sxhash/large
-           #:compute-sxhash/fixnum))
+           #:compute-sxhash/fixnum
+           #:compute-sxhash/mixbag))
 
 (in-package :cl-bench.hash)
 
@@ -87,5 +88,17 @@
       (dotimes (i 2000)
         (setf result (logxor result (sxhash value1)))
         (setf result (logxor result (sxhash value2)))))))
+
+(defun compute-sxhash/mixbag (&optional (size 16))
+  (let ((value (list* 0
+                      (loop repeat size
+                            collect (ecase (random 5)
+                                      (0 (random most-positive-fixnum))
+                                      (1 (random 33.2))
+                                      (2 (char "0123456789" (random 10)))
+                                      (3 (vector 1 "x" #\8 (random 3.4)))
+                                      (4 (string "jd was here \o/")))))))
+    (dotimes (i 4000000 value)
+      (setf (car value) (sxhash value)))))
 
 ;; EOF
