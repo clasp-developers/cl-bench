@@ -272,13 +272,14 @@
 
 (defbench hash-strings
     :group :hash
+    :setup 'cl-bench.hash:hash-strings/setup
     :function 'cl-bench.hash:hash-strings
     :runs 2)
 
 (defbench hash-integers
     :group :hash
     :function 'cl-bench.hash:hash-integers
-    :runs 10)
+    :runs 5)
 
 (defbench compute-sxhash/small
     :group :hash

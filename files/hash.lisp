@@ -6,6 +6,7 @@
 (defpackage :cl-bench.hash
   (:use :common-lisp)
   (:export #:run-slurp-lines
+           #:hash-strings/setup
            #:hash-strings
            #:hash-integers
            #:compute-sxhash
@@ -36,6 +37,7 @@
     (16 256 4096 65536 1048576 16777216 268435456 4294967296 536870911)))
 
 (defvar *table* nil)
+(defvar *strings* nil)
 
 (defun fixnum-to-string (n base)
   (declare (fixnum n base))
@@ -47,19 +49,26 @@
          (setf (schar result i) (aref +digit+ r)))
     result))
 
+(defun hash-strings/setup ()
+  (setf *strings*
+        (loop for i from 0 below 100000
+              collect (fixnum-to-string i 16))))
+
 ;; CMUCL-18c seems to run into a bug here: it mistakenly declares
 ;; counter to be a fixnum
 (defun hash-strings (&optional (size 300))
   (declare (fixnum size))
-   (setq *table* (make-hash-table :test #'equal :size size))
-   (dotimes (i 100000)
-     (setf (gethash (fixnum-to-string i 16) *table*) i))
-   (maphash (lambda (key value) (incf (gethash key *table*) value)) *table*))
+  (setq *table* (make-hash-table :test 'equal :size size))
+  (dolist (s *strings*)
+    (setf (gethash s *table*) size))
+  (maphash (lambda (key value)
+             (incf (gethash key *table*) value))
+           *table*))
   
 (defun hash-integers (&optional (size 300))
   (declare (fixnum size))
-  (setq *table* (make-hash-table :test #'eql :size size))
-  (dotimes (i 100000)
+  (setq *table* (make-hash-table :test 'eql :size size))
+  (dotimes (i 1000000)
     (setf (gethash i *table*) (1+ i)))
   (maphash (lambda (key value) (incf (gethash key *table*) value)) *table*))
 
