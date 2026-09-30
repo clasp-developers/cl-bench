@@ -6,6 +6,10 @@
 (defpackage :cl-bench.hash
   (:use :common-lisp)
   (:export #:run-slurp-lines
+           #:hash-random-strings/setup
+           #:hash-random-strings
+           #:hash-similar-strings/setup
+           #:hash-similar-strings
            #:hash-strings/setup
            #:hash-strings
            #:hash-integers
@@ -31,6 +35,8 @@
          (read-many-lines "/usr/dict/words"))))
 
 (defparameter +digit+ "0123456789ABCDEF")
+(defparameter +alphanumeric+
+  "0123456789ABCDEFabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 (defparameter +digits-needed+
   #((10 100 1000 10000 100000 10000000 100000000 536870911)
@@ -38,6 +44,8 @@
 
 (defvar *table* nil)
 (defvar *strings* nil)
+(defvar *similar-strings* nil)
+(defvar *random-strings* nil)
 
 (defun fixnum-to-string (n base)
   (declare (fixnum n base))
@@ -49,13 +57,46 @@
          (setf (schar result i) (aref +digit+ r)))
     result))
 
+(defun random-string (length)
+  (let ((string (make-string length)))
+    (loop for i from 0 below length do
+      (setf (aref string i)
+            (aref +alphanumeric+ (random (length +alphanumeric+)))))
+    string))
+
+(defun hash-random-strings/setup ()
+  (setf *random-strings*
+        (loop for i from 0 below 100000
+              collect (random-string 32))))
+
+(defun hash-random-strings (&optional (size 300))
+  (declare (fixnum size))
+  (setq *table* (make-hash-table :test 'equal :size size))
+  (dolist (s *random-strings*)
+    (setf (gethash s *table*) size))
+  (maphash (lambda (key value)
+             (incf (gethash key *table*) value))
+           *table*))
+
+(defun hash-similar-strings/setup ()
+  (setf *similar-strings*
+        (loop for i from 0 below 100000
+              collect (fixnum-to-string i 2))))
+
+(defun hash-similar-strings (&optional (size 300))
+  (declare (fixnum size))
+  (setq *table* (make-hash-table :test 'equal :size size))
+  (dolist (s *similar-strings*)
+    (setf (gethash s *table*) size))
+  (maphash (lambda (key value)
+             (incf (gethash key *table*) value))
+           *table*))
+
 (defun hash-strings/setup ()
   (setf *strings*
         (loop for i from 0 below 100000
               collect (fixnum-to-string i 16))))
 
-;; CMUCL-18c seems to run into a bug here: it mistakenly declares
-;; counter to be a fixnum
 (defun hash-strings (&optional (size 300))
   (declare (fixnum size))
   (setq *table* (make-hash-table :test 'equal :size size))

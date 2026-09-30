@@ -270,22 +270,34 @@
     :runs 2
     :disabled-for '(:clasp))
 
+(defbench hash-random-strings
+    :group :hash
+    :setup 'cl-bench.hash:hash-random-strings/setup
+    :function 'cl-bench.hash:hash-random-strings
+    :runs 4)
+
+(defbench hash-similar-strings
+    :group :hash
+    :setup 'cl-bench.hash:hash-similar-strings/setup
+    :function 'cl-bench.hash:hash-similar-strings
+    :runs 4)
+
 (defbench hash-strings
     :group :hash
     :setup 'cl-bench.hash:hash-strings/setup
     :function 'cl-bench.hash:hash-strings
-    :runs 2)
+    :runs 4)
 
 (defbench hash-integers
     :group :hash
     :function 'cl-bench.hash:hash-integers
-    :runs 5)
+    :runs 2)
 
 (defbench compute-sxhash/small
     :group :hash
     :long "Estimate hashing performance without hash tables"
     :function 'cl-bench.hash:compute-sxhash/small
-    :runs 10)
+    :runs 2)
 
 (defbench compute-sxhash/large
     :group :hash
@@ -297,13 +309,13 @@
     :group :hash
     :long "Estimate hashing performance without hash tables"
     :function 'cl-bench.hash:compute-sxhash/fixnum
-    :runs 20)
+    :runs 2)
 
 (defbench compute-sxhash/mixbag
     :group :hash
     :long "Estimate hashing performance without hash tables"
     :function 'cl-bench.hash:compute-sxhash/mixbag
-    :runs 10)
+    :runs 2)
 
 (defbench slurp-lines
     :group :gc
