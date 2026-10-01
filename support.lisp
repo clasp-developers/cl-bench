@@ -24,9 +24,11 @@
 (defvar *benchmark-results* '())
 
 (defvar +implementation+
-  (concatenate 'string
-               (lisp-implementation-type) " "
-               (lisp-implementation-version)))
+  (if (boundp 'cl-user::*impl*)
+      cl-user::*impl*
+      (concatenate 'string
+                   (lisp-implementation-type) " "
+                   (lisp-implementation-version))))
 
 
 (defclass benchmark ()
@@ -112,11 +114,12 @@
                     (eval setup)
                     (funcall setup)))
               (format t "~&=== running ~a~%" benchmark)
-              (bench-time function runs))))
+              (cl-user::call-with-pre-test-hook
+               "start" (lambda () (bench-time function runs))))))
     (push (list (slot-value benchmark 'short) real user sys consed)
           *benchmark-results*)))
 
-(defun bench-run ()
+(defun bench-run (&key (run-if (constantly t)))
   (with-open-file (f (benchmark-report-file)
                      :direction :output
                      :if-exists :supersede)
@@ -127,17 +130,22 @@
            (*compile-print* nil))
        (bench-report-header)
        (dolist (b (reverse *benchmarks*))
-         (bench-run-1 b)
-         (bench-report (car *benchmark-results*)))
+         (when (funcall run-if b)
+           (bench-run-1 b)
+           (bench-report (car *benchmark-results*))))
        (bench-report-footer))))
+
+(defun bench-run/group (group)
+  (bench-run :run-if (lambda (b) (eql (benchmark-group b) group))))
 
 (defun benchmark-report-file ()
   (multiple-value-bind (second minute hour date month year)
       (get-decoded-time)
     (declare (ignore second))
-    (format nil "~aCL-benchmark-~d~2,'0d~2,'0dT~2,'0d~2,'0d"
-            (namestring *output-dir*)
-            year month date hour minute)))
+    (or (format nil "~a~a" (namestring *output-dir*) cl-user::*name*)
+        (format nil "~aCL-benchmark-~d~2,'0d~2,'0dT~2,'0d~2,'0d"
+                (namestring *output-dir*)
+                year month date hour minute))))
 
 (defun bench-report-header ()
   (format *benchmark-output*
