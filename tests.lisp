@@ -270,40 +270,65 @@
     :runs 2
     :disabled-for '(:clasp))
 
-(defbench hash-strings
+(defbench htable-string-small
     :group :hash
-    :setup 'cl-bench.hash:hash-strings/setup
-    :function 'cl-bench.hash:hash-strings
+    :setup '(cl-bench.hash:setup-string :string-length 8)
+    :function 'cl-bench.hash:bench-htable
+    :runs 4)
+
+(defbench htable-string-large
+    :group :hash
+    :setup '(cl-bench.hash:setup-string :string-length 4096 :n-keys (expt 2 14))
+    :function 'cl-bench.hash:bench-htable
+    :runs 4)
+
+;;; This test is added to bypass SBCL adaptive hashing of strings, where it
+;;; initially takes only few characters from the beginning and from the end.
+(defbench htable-string-fair
+    :group :hash
+    :setup '(cl-bench.hash:setup-string :charset-length 2)
+    :function 'cl-bench.hash:bench-htable
+    :runs 4)
+
+(defbench htable-mixbag
+    :group :hash
+    :setup '(cl-bench.hash:setup-mixbag)
+    :function 'cl-bench.hash:bench-htable
     :runs 2)
 
-(defbench hash-integers
+(defbench htable-fixnum
     :group :hash
-    :function 'cl-bench.hash:hash-integers
-    :runs 5)
+    :setup '(cl-bench.hash:setup-fixnum)
+    :function 'cl-bench.hash:bench-htable
+    :runs 4)
 
-(defbench compute-sxhash/small
+(defbench htable-set+remove
     :group :hash
-    :long "Estimate hashing performance without hash tables"
-    :function 'cl-bench.hash:compute-sxhash/small
-    :runs 10)
-
-(defbench compute-sxhash/large
-    :group :hash
-    :long "Estimate hashing performance without hash tables"
-    :function 'cl-bench.hash:compute-sxhash/large
+    :long "Alternating set and remove in groups."
+    :setup '(cl-bench.hash:setup-string)
+    :function 'cl-bench.hash:bench-setrem
     :runs 2)
 
-(defbench compute-sxhash/fixnum
+(defbench sxhash-string-small
     :group :hash
-    :long "Estimate hashing performance without hash tables"
-    :function 'cl-bench.hash:compute-sxhash/fixnum
-    :runs 20)
+    :long "Estimate hashing performance without hash tables."
+    :setup '(cl-bench.hash:setup-string :string-length 8)
+    :function 'cl-bench.hash:bench-sxhash
+    :runs 4)
 
-(defbench compute-sxhash/mixbag
+(defbench sxhash-string-large
+    :group :hash
+    :long "Estimate hashing performance without hash tables."
+    :setup '(cl-bench.hash:setup-string :string-length 4096 :n-keys (expt 2 14))
+    :function 'cl-bench.hash:bench-sxhash
+    :runs 4)
+
+(defbench sxhash-fixnum
     :group :hash
     :long "Estimate hashing performance without hash tables"
-    :function 'cl-bench.hash:compute-sxhash/mixbag
-    :runs 10)
+    :setup '(cl-bench.hash:setup-fixnum)
+    :function 'cl-bench.hash:bench-sxhash
+    :runs 4)
 
 (defbench slurp-lines
     :group :gc

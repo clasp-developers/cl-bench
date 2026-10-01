@@ -107,7 +107,10 @@
           (progn
             (bench-gc)
             (with-slots (setup function runs) benchmark
-              (when setup (funcall setup))
+              (when setup
+                (if (listp setup)
+                    (eval setup)
+                    (funcall setup)))
               (format t "~&=== running ~a~%" benchmark)
               (bench-time function runs))))
     (push (list (slot-value benchmark 'short) real user sys consed)

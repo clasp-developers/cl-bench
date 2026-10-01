@@ -6,14 +6,12 @@
 (defpackage :cl-bench.hash
   (:use :common-lisp)
   (:export #:run-slurp-lines
-           #:hash-strings/setup
-           #:hash-strings
-           #:hash-integers
-           #:compute-sxhash
-           #:compute-sxhash/small
-           #:compute-sxhash/large
-           #:compute-sxhash/fixnum
-           #:compute-sxhash/mixbag))
+           #:setup-string
+           #:setup-fixnum
+           #:setup-mixbag
+           #:bench-htable
+           #:bench-setrem
+           #:bench-sxhash))
 
 (in-package :cl-bench.hash)
 
@@ -30,84 +28,84 @@
         ((probe-file "/usr/dict/words")
          (read-many-lines "/usr/dict/words"))))
 
-(defparameter +digit+ "0123456789ABCDEF")
-
-(defparameter +digits-needed+
-  #((10 100 1000 10000 100000 10000000 100000000 536870911)
-    (16 256 4096 65536 1048576 16777216 268435456 4294967296 536870911)))
+(defparameter +alphanumeric+
+  "0123456789ABCDEFabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 (defvar *table* nil)
-(defvar *strings* nil)
+(defvar *value* nil)
+(defvar *keys* nil)
 
-(defun fixnum-to-string (n base)
-  (declare (fixnum n base))
-  (let* ((tsize (position-if (lambda (x) (> (the fixnum x) n))
-                            (aref +digits-needed+ (ash base -4))))
-         (result (make-string (1+ tsize))))
-    (loop for i fixnum from tsize downto 0 with q fixnum = n and r fixnum = 0
-      do (multiple-value-setq (q r) (floor q base))
-         (setf (schar result i) (aref +digit+ r)))
-    result))
+(defun random-string (length &optional (nchar (length +alphanumeric+)))
+  (let ((string (make-string length)))
+    (loop for i from 0 below length do
+      (setf (aref string i)
+            (aref +alphanumeric+ (random nchar))))
+    string))
 
-(defun hash-strings/setup ()
-  (setf *strings*
-        (loop for i from 0 below 100000
-              collect (fixnum-to-string i 16))))
+(defun setup-mixbag (&key (table-size 300)
+                          (n-keys (expt 2 14)))
+  (setq *table* (make-hash-table :test 'equalp :size table-size))
+  (setq *value* (random 89))
+  (setq *keys*
+        (loop repeat n-keys
+              collect (ecase (random 5)
+                        (0 (random most-positive-fixnum))
+                        (1 (random 33.2))
+                        (2 (char "0123456789" (random 10)))
+                        (3 (vector 1 "x" #\8 (random 3.4)))
+                        (4 (string "jd was here \o/"))))))
 
-;; CMUCL-18c seems to run into a bug here: it mistakenly declares
-;; counter to be a fixnum
-(defun hash-strings (&optional (size 300))
-  (declare (fixnum size))
-  (setq *table* (make-hash-table :test 'equal :size size))
-  (dolist (s *strings*)
-    (setf (gethash s *table*) size))
-  (maphash (lambda (key value)
-             (incf (gethash key *table*) value))
-           *table*))
-  
-(defun hash-integers (&optional (size 300))
-  (declare (fixnum size))
-  (setq *table* (make-hash-table :test 'eql :size size))
-  (dotimes (i 1000000)
-    (setf (gethash i *table*) (1+ i)))
-  (maphash (lambda (key value) (incf (gethash key *table*) value)) *table*))
+(defun setup-string (&key (table-size 300)
+                          (n-keys (expt 2 16))
+                          (string-length 32)
+                          (charset-length (length +alphanumeric+)))
+  (setq *table* (make-hash-table :test 'equal :size table-size))
+  (setq *value* (random 42))
+  (setq *keys*
+        (loop repeat n-keys
+              collect (random-string string-length charset-length))))
 
-(defun compute-sxhash (&optional (size 32))
-  (declare (fixnum size))
-  (let ((string (make-string size :initial-element
-                             (ecase (random 3) (0 #\x) (1 #\y) (2 #\z))))
-        (result 0))
-    (dotimes (i 4000000 result)
-      (setf (char string (random size))
-            (ecase (random 3) (0 #\x) (1 #\y) (2 #\z)))
-      (setf result (logxor result (sxhash string))))))
+(defun setup-fixnum (&key (table-size 300)
+                       (n-keys (expt 2 20))
+                       (max-value most-positive-fixnum))
+  (setq *table* (make-hash-table :test 'eql :size table-size))
+  (setq *value* (random 89))
+  (setq *keys*
+        (loop repeat n-keys
+              collect (random max-value))))
 
-(defun compute-sxhash/small ()
-  (compute-sxhash 6))
+;;; This test excercises insert, map, get and upsert.
+(defun bench-htable ()
+  (let ((table *table*)
+        (value *value*))
+    (loop for i from 0
+          for key in *keys*
+          do (setf (gethash key table) (+ value i)))
+    (maphash (lambda (key value)
+               (incf (gethash key table) value))
+             table)))
 
-(defun compute-sxhash/large ()
-  (compute-sxhash 1024))
+;;; This test excercises alternating insert and remove.
+(defun bench-setrem ()
+  (let ((table *table*)
+        (value *value*))
+    (loop for i from 0 by 4
+          for (k1 k2 k3 k4) on *keys* by #'cddddr
+          do (setf (gethash k1 table) (+ value i))
+             (setf (gethash k2 table) (+ value i))
+             (setf (gethash k3 table) (+ value i))
+             (setf (gethash k4 table) (+ value i))
+             (remhash k1 table)
+             (remhash k2 table)
+             (remhash k3 table)
+             (remhash k4 table))))
 
-(defun compute-sxhash/fixnum (&optional (max most-positive-fixnum))
-  (let ((result 0)
-        value1 value2)
-    (dotimes (i 2000 result)
-      (setf value1 (random max))
-      (setf value2 (- (random max)))
-      (dotimes (i 2000)
-        (setf result (logxor result (sxhash value1)))
-        (setf result (logxor result (sxhash value2)))))))
-
-(defun compute-sxhash/mixbag (&optional (size 16))
-  (let ((value (list* 0
-                      (loop repeat size
-                            collect (ecase (random 5)
-                                      (0 (random most-positive-fixnum))
-                                      (1 (random 33.2))
-                                      (2 (char "0123456789" (random 10)))
-                                      (3 (vector 1 "x" #\8 (random 3.4)))
-                                      (4 (string "jd was here \o/")))))))
-    (dotimes (i 4000000 value)
-      (setf (car value) (sxhash value)))))
+(defun bench-sxhash ()
+  (let ((table *table*)
+        (value *value*))
+    (loop for i from 0
+          for key in *keys*
+          do (setf value (logxor value (sxhash key))))
+    value))
 
 ;; EOF
