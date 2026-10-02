@@ -286,7 +286,7 @@
 ;;; initially takes only few characters from the beginning and from the end.
 (defbench htable-string-fair
     :group :hash
-    :setup '(cl-bench.hash:setup-string :charset-length 2)
+    :setup '(cl-bench.hash:setup-string :string-length 256 :charset-length 2)
     :function 'cl-bench.hash:bench-htable
     :runs 4)
 
