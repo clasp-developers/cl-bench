@@ -43,36 +43,51 @@
     string))
 
 (defun setup-mixbag (&key (table-size 300)
-                          (n-keys (expt 2 14)))
+                          (n-keys (expt 2 14))
+                          (prefill 0))
   (setq *table* (make-hash-table :test 'equalp :size table-size))
   (setq *value* (random 89))
   (setq *keys*
         (loop repeat n-keys
-              collect (ecase (random 5)
-                        (0 (random most-positive-fixnum))
-                        (1 (random 33.2))
-                        (2 (char "0123456789" (random 10)))
-                        (3 (vector 1 "x" #\8 (random 3.4)))
-                        (4 (string "jd was here \o/"))))))
+              for key = (ecase (random 5)
+                          (0 (random most-positive-fixnum))
+                          (1 (random 33.2))
+                          (2 (char "0123456789" (random 10)))
+                          (3 (vector 1 "x" #\8 (random 3.4)))
+                          (4 (string "jd was here \o/")))
+              collect key
+              do (unless (zerop prefill)
+                   (decf prefill)
+                   (setf (gethash key *table*) *value*)))))
 
 (defun setup-string (&key (table-size 300)
                           (n-keys (expt 2 16))
+                          (prefill 0)
                           (string-length 32)
                           (charset-length (length +alphanumeric+)))
   (setq *table* (make-hash-table :test 'equal :size table-size))
   (setq *value* (random 42))
   (setq *keys*
         (loop repeat n-keys
-              collect (random-string string-length charset-length))))
+              for key = (random-string string-length charset-length)
+              collect key
+              do (unless (zerop prefill)
+                   (decf prefill)
+                   (setf (gethash key *table*) *value*)))))
 
 (defun setup-fixnum (&key (table-size 300)
-                       (n-keys (expt 2 20))
-                       (max-value most-positive-fixnum))
+                          (n-keys (expt 2 20))
+                          (prefill 0)
+                          (max-value most-positive-fixnum))
   (setq *table* (make-hash-table :test 'eql :size table-size))
   (setq *value* (random 89))
   (setq *keys*
         (loop repeat n-keys
-              collect (random max-value))))
+              for key = (random max-value)
+              collect key
+              do (unless (zerop prefill)
+                   (decf prefill)
+                   (setf (gethash key *table*) *value*)))))
 
 ;;; This test excercises insert, map, get and upsert.
 (defun bench-htable ()

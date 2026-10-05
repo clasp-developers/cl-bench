@@ -302,10 +302,19 @@
     :function 'cl-bench.hash:bench-htable
     :runs 4)
 
+(defbench htable-sparse
+    :group :hash
+    :setup '(cl-bench.hash:setup-fixnum :table-size (expt 2 16)
+                                        :n-keys (expt 2 15))
+    :function 'cl-bench.hash:bench-htable
+    :runs 4)
+
 (defbench htable-set+remove
     :group :hash
     :long "Alternating set and remove in groups."
-    :setup '(cl-bench.hash:setup-string)
+    :setup '(cl-bench.hash:setup-string :table-size (expt 2 16)
+                                        :n-keys (expt 2 15)
+                                        :prefill (expt 2 14))
     :function 'cl-bench.hash:bench-setrem
     :runs 2)
 
