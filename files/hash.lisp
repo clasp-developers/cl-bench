@@ -38,8 +38,22 @@
 (defun random-string (length &optional (nchar (length +alphanumeric+)))
   (let ((string (make-string length)))
     (loop for i from 0 below length do
-      (setf (aref string i)
-            (aref +alphanumeric+ (random nchar))))
+          (setf (aref string i)
+                (aref +alphanumeric+ (random nchar))))
+    string))
+
+;;; This creates strings of form XXXXabcXXXX that is ith stable prefix and
+;;; suffix. This generator is devised to bypass SBCL adaptive string hashing.
+(defun random-string-non-adaptive (length nkeys)
+  (let* ((string (make-string length))
+         (chrlen (length +alphanumeric+))
+         (meaningful-length (ceiling (log nkeys chrlen))))
+    (loop with b1 = (floor (- length meaningful-length) 2)
+          with b2 = (floor (+ length meaningful-length) 2)
+          for i from 0 below length
+          do (if (<= b1 i b2)
+                 (setf (aref string i) (aref +alphanumeric+ (random chrlen)))
+                 (setf (aref string i) #\X)))
     string))
 
 (defun setup-mixbag (&key (table-size 300)
@@ -64,12 +78,15 @@
                           (n-keys (expt 2 16))
                           (prefill 0)
                           (string-length 32)
-                          (charset-length (length +alphanumeric+)))
+                          (charset-length (length +alphanumeric+))
+                          (anti-adaptive-p nil))
   (setq *table* (make-hash-table :test 'equal :size table-size))
   (setq *value* (random 42))
   (setq *keys*
         (loop repeat n-keys
-              for key = (random-string string-length charset-length)
+              for key = (if anti-adaptive-p
+                            (random-string-non-adaptive string-length n-keys)
+                            (random-string string-length charset-length))
               collect key
               do (unless (zerop prefill)
                    (decf prefill)
