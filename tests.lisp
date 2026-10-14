@@ -302,6 +302,18 @@
     :function 'cl-bench.hash:bench-htable
     :runs 4)
 
+(defbench htable-fixnum-2
+    :group :hash*
+    :setup '(cl-bench.hash:setup-fixnum)
+    :function 'cl-bench.hash:bench-htable
+    :runs 128)
+
+;; (defbench htable-string-small-2
+;;     :group :hash*
+;;     :setup '(cl-bench.hash:setup-string :string-length 8)
+;;     :function 'cl-bench.hash:bench-htable
+;;     :runs 2048)
+
 (defbench htable-sparse
     :group :hash
     :setup '(cl-bench.hash:setup-fixnum :table-size (expt 2 16)
@@ -321,7 +333,8 @@
 (defbench sxhash-string-small
     :group :hash
     :long "Estimate hashing performance without hash tables."
-    :setup '(cl-bench.hash:setup-string :string-length 8)
+    :setup '(cl-bench.hash:setup-string :string-length 8
+                                        :n-keys (expt 2 18))
     :function 'cl-bench.hash:bench-sxhash
     :runs 4)
 
