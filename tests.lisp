@@ -329,7 +329,8 @@
 (defbench sxhash-string-small
     :group :hash
     :long "Estimate hashing performance without hash tables."
-    :setup '(cl-bench.hash:setup-string :string-length 8)
+    :setup '(cl-bench.hash:setup-string :string-length 8
+                                        :n-keys (expt 2 18))
     :function 'cl-bench.hash:bench-sxhash
     :runs 4)
 
