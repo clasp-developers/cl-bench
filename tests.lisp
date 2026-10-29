@@ -302,6 +302,14 @@
     :function 'cl-bench.hash:bench-htable
     :runs 4)
 
+(defbench htable-equalp-numbers
+    :group :hash
+    :setup `(cl-bench.hash:setup-number :n-keys (expt 2 14)
+                                        :prefill (expt 2 14)
+                                        :profile :typical)
+    :function 'cl-bench.hash:bench-setget
+    :runs 2)
+
 (defbench htable-sparse
     :group :hash
     :setup '(cl-bench.hash:setup-fixnum :table-size (expt 2 16)
