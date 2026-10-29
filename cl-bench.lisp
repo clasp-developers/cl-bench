@@ -2,12 +2,35 @@
 
 (in-package #:cl-bench)
 
+(defun get-bytes-consed ()
+  #+ecl (ffi:c-inline () () :uint64-t "GC_get_total_bytes()" :one-liner t)
+  #+sbcl (sb-ext:get-bytes-consed)
+  #+ccl (ccl::total-bytes-allocated)
+  #+lispworks (hcl:total-allocation)
+  #+clasp (gctools::bytes-allocated)
+  #-(or ecl sbcl ccl lispworks clasp) 0)
+
 (defun bench-gc ()
   (trivial-garbage:gc :full t))
 
-#+ (or)
-(defun bench-time ()
-  (error "use metering"))
+(defun bench-time (fun times)
+  (let (before-real after-real
+        before-user after-user
+        before-cons after-cons)
+    (setq before-user (get-internal-run-time))
+    (setq before-real (get-internal-real-time))
+    (setq before-cons (get-bytes-consed))
+    (dotimes (i times)
+      (funcall fun))
+    (setq after-user (get-internal-run-time))
+    (setq after-real (get-internal-real-time))
+    (setq after-cons (get-bytes-consed))
+    ;; return real user sys consed
+    (values
+     (coerce (/ (- after-real before-real) internal-time-units-per-second) 'float)
+     (coerce (/ (- after-user before-user) internal-time-units-per-second) 'float)
+     nil
+     (- after-cons before-cons))))
 
 (let ((root-dir (asdf:system-source-directory '#:cl-bench)))
   (defparameter *root-dir* root-dir

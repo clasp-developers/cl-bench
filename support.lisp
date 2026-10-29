@@ -161,24 +161,4 @@
     (terpri *benchmark-output*)
     (force-output *benchmark-output*)))
 
-;; a generic timing function, that depends on GET-INTERNAL-RUN-TIME
-;; and GET-INTERNAL-REAL-TIME returning sensible results. If a version
-;; was defined in sysdep/setup-<impl>, we use that instead
-(defun generic-bench-time (fun times)
-  (let (before-real after-real before-user after-user)
-    (setq before-user (get-internal-run-time))
-    (setq before-real (get-internal-real-time))
-    (dotimes (i times)
-      (funcall fun))
-    (setq after-user (get-internal-run-time))
-    (setq after-real (get-internal-real-time))
-    ;; return real user sys consed
-    (values (coerce (/ (- after-real before-real) internal-time-units-per-second) 'float)
-            (coerce (/ (- after-user before-user) internal-time-units-per-second) 'float)
-            nil nil)))
-
-(eval-when (:load-toplevel :execute)
-  (unless (fboundp 'bench-time)
-    (setf (fdefinition 'bench-time) #'generic-bench-time)))
-
 ;; EOF
